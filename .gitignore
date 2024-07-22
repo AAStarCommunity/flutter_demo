@@ -1,6 +1,10 @@
 # flutter build
-build
-
+build/*.*
+build/*
+/build/*
+build/
+*.dill.*
+*.dill
 # Flutter/Dart/Pub related
 # Miscellaneous
 *.class
@@ -251,3 +255,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+pubspec.lock
+pubspec.lock
+
