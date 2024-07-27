@@ -80,6 +80,7 @@ class ThemeController extends GetxController {
 
   changeTheme(ThemeModel themeModel){
     _theme.value = themeModel.name;
+    Get.changeThemeMode(themeModel.mode);
     Get.find<SharedPreferences>().theme = themeModel.name;
     update();
   }

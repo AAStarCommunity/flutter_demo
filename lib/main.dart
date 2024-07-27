@@ -48,7 +48,15 @@ class MyApp extends StatelessWidget {
           navigatorObservers: [GetObserver()],
           getPages: routes,
           initialRoute: MainPage.routeName,
-          themeMode: ThemeMode.light,
+          themeMode: ThemeMode.system,
+          theme: ThemeData(
+            useMaterial3: true,
+            brightness: Brightness.light,
+          ),
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            brightness: Brightness.dark,
+          ),
           builder: EasyLoading.init(builder: (ctx, child){
             EasyLoading.instance.indicatorType = EasyLoadingIndicatorType.ring;
             return GestureDetector(

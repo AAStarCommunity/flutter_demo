@@ -22,6 +22,7 @@ class _MainPageState extends State<MainPage> {
     var theme = Get.find<ThemeController>().themeModel;
     return Scaffold(
         backgroundColor: theme.backgroundColor,
+        appBar: AppBar(),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
