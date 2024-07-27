@@ -35,12 +35,12 @@ void main() async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(375, 812),
         builder: (_, __) => GetMaterialApp(
+          title: "HexagonWarrior",
           initialBinding: BindingsBuilder(() async{
             Get.put(ThemeController());
           }),

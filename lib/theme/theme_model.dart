@@ -63,7 +63,6 @@ class DarkThemeModel implements ThemeModel{
 
 }
 
-
 class ThemeController extends GetxController {
   static ThemeController get i => Get.find();
 
@@ -72,9 +71,17 @@ class ThemeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    var theme = Get.find<SharedPreferences>().theme;
+    final theme = Get.find<SharedPreferences>().theme;
     if(isNotNull(theme)){
       _theme.value = theme!;
+
+      if(themeModel is SystemThemeModel) {
+        Get.changeThemeMode(ThemeMode.system);
+      } else if(themeModel is DarkThemeModel) {
+        Get.changeThemeMode(ThemeMode.dark);
+      } else if(themeModel is LightThemeModel) {
+        Get.changeThemeMode(ThemeMode.light);
+      }
     }
   }
 

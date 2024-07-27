@@ -4,6 +4,10 @@ const zhCN = {
   "dark" : "黑暗",
   "theme" : "主题",
   "language" : "语言",
+  "login": "登录",
+  "mail": "邮箱",
+  "mailHint": "电子邮件地址",
+  "mailHintError": "请输入有效的电子邮件地址",
   ..._easy_refresh
 };
 

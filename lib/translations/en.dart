@@ -4,6 +4,10 @@ const en = {
   "dark" : "dark",
   "theme" : "theme",
   "language" : "language",
+  "login": "Login",
+  "mail": "Mail",
+  "mailHint": "电子邮件地址",
+  "mailHintError": "请输入有效的电子邮件地址",
   ..._easy_refresh
 };
 

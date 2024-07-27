@@ -1,11 +1,23 @@
+import 'package:HexagonWarrior/pages/account/login_page.dart';
+import 'package:HexagonWarrior/pages/account/register_page.dart';
+import 'package:HexagonWarrior/routes/global_auth_middleware.dart';
 import 'package:get/get.dart';
 
+import '../pages/account/account_binding.dart';
 import '../pages/main_page.dart';
 import '../theme/change_language_page.dart';
 import '../theme/change_theme_page.dart';
 
 final routes = <GetPage>[
-  GetPage(name: MainPage.routeName, page: () => MainPage()),
+  GetPage(name: LoginPage.routeName, page: () => LoginPage(), bindings: [
+    AccountBinding()
+  ]),
+  GetPage(name: RegisterPage.routeName, page: () => RegisterPage(), bindings: [
+    AccountBinding()
+  ]),
+  GetPage(name: MainPage.routeName, page: () => MainPage(), middlewares: [
+    GlobalAuthMiddleware()
+  ]),
   GetPage(name: ChangeThemePage.routeName, page: () => ChangeThemePage()),
   GetPage(name: ChangeLanguagePage.routeName, page: () => ChangeLanguagePage())
 ];
