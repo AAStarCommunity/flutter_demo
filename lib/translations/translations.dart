@@ -22,8 +22,8 @@ class AppTranslations extends Translations {
 
   static List<Tuple2<String, Locale>> get supportLanguages => supportedLocales.map<Tuple2<String, Locale>>((e) {
     if(e.languageCode == 'en'){
-      return Tuple2('英语', e);
+      return Tuple2('en', e);
     }
-    return Tuple2("中文", e);
+    return Tuple2("zh", e);
   }).toList();
 }

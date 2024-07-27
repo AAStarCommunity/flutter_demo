@@ -1,13 +1,20 @@
 const en = {
-  "system" : "system",
-  "light" : "light",
-  "dark" : "dark",
-  "theme" : "theme",
-  "language" : "language",
+  "system" : "System",
+  "light" : "Light",
+  "dark" : "Dark",
+  "theme" : "Brightness",
+  "language" : "Language",
+  "en" : "English",
+  "zh" : "Chinese",
   "login": "Login",
   "mail": "Mail",
   "mailHint": "电子邮件地址",
   "mailHintError": "请输入有效的电子邮件地址",
+  "settings": "Settings",
+  "account": "账户",
+  "transaction": "账单",
+  "logout": "退出",
+  "appearance": "Appearance",
   ..._easy_refresh
 };
 

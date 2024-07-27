@@ -2,8 +2,6 @@ import 'package:HexagonWarrior/theme/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../pages/main_page.dart';
-
 class ChangeThemePage extends GetView<ThemeController> {
   static const routeName = '/change_theme';
 
@@ -12,24 +10,17 @@ class ChangeThemePage extends GetView<ThemeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: controller.themeModel.backgroundColor,
-        appBar: AppBar(),
-        body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          const Row(),
-          Text("当前主题:${controller.themeModel.name}", style: TextStyle(
-            color: controller.themeModel.textColor
-          )),
-          ...List.generate(ThemeModel.themes.length, (index) {
+        appBar: AppBar(title: Text("theme".tr, style: Theme.of(context).textTheme.titleMedium)),
+        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Card(child: ListView.separated(itemCount: ThemeModel.themes.length, separatorBuilder: (_, __) {
+          return Divider(thickness: .5, height: 0)
+              .paddingSymmetric(horizontal: 18);
+        }, itemBuilder: (_, index) {
             var model = ThemeModel.themes[index];
-            return ElevatedButton(
-                onPressed: () {
-                  controller.changeTheme(model);
-                  Get.offAllNamed(MainPage.routeName);
-                },
-                child: Text(model.name, style: TextStyle(
-                  color: controller.themeModel.textColor
-                )));
-          })
+            return ListTile(title: Text(model.name.tr), selected: model.name == controller.themeModel.name, onTap: (){
+              controller.changeTheme(model);
+            });
+          },physics: NeverScrollableScrollPhysics(), shrinkWrap: true, ), clipBehavior: Clip.hardEdge).paddingSymmetric(horizontal: 16)
         ]));
   }
 }

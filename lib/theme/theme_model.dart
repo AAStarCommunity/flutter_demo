@@ -22,7 +22,7 @@ class SystemThemeModel implements ThemeModel{
   ThemeMode mode = ThemeMode.system;
 
   @override
-  String name = "system".tr;
+  String name = "system";
 
   @override
   Color backgroundColor = Colors.white;
@@ -37,7 +37,7 @@ class LightThemeModel implements ThemeModel{
   ThemeMode mode = ThemeMode.light;
 
   @override
-  String name = "light".tr;
+  String name = "light";
 
   @override
   Color backgroundColor = Colors.white;
@@ -53,7 +53,7 @@ class DarkThemeModel implements ThemeModel{
   ThemeMode mode = ThemeMode.dark;
 
   @override
-  String name = "dark".tr;
+  String name = "dark";
 
   @override
   Color backgroundColor = Colors.black;

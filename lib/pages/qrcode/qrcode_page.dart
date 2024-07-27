@@ -3,6 +3,9 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRCodePage extends StatefulWidget {
+
+  static const String routeName = "/qr_code_scanner";
+
   @override
   _QRCodePageState createState() => _QRCodePageState();
 }

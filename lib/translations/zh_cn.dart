@@ -4,10 +4,17 @@ const zhCN = {
   "dark" : "黑暗",
   "theme" : "主题",
   "language" : "语言",
+  "en" : "英文",
+  "zh" : "中文",
   "login": "登录",
   "mail": "邮箱",
   "mailHint": "电子邮件地址",
   "mailHintError": "请输入有效的电子邮件地址",
+  "settings": "设置",
+  "account": "账户",
+  "transaction": "账单",
+  "logout": "注销",
+  "appearance": "外观",
   ..._easy_refresh
 };
 
