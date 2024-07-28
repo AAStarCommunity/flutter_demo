@@ -17,4 +17,10 @@ class AccountController extends GetxController {
     super.onClose();
     emailCtrl.dispose();
   }
+
+  Future<HttpResult> logout() async{
+    await Future.delayed(const Duration(seconds: 3));
+    final res = HttpResult.success(1, "ok", null);
+    return res;
+  }
 }

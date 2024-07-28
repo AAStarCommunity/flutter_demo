@@ -1,3 +1,4 @@
+import 'package:HexagonWarrior/pages/account/account_controller.dart';
 import 'package:HexagonWarrior/utils/log/lk_log_output.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
           title: "HexagonWarrior",
           initialBinding: BindingsBuilder(() async{
             Get.put(ThemeController());
+            Get.put(AccountController());
           }),
           navigatorKey: Get.key,
           navigatorObservers: [GetObserver()],

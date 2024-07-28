@@ -36,7 +36,7 @@ class LoginPage extends GetView<AccountController> {
 
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(title: Text("login".tr, style: Theme.of(context).textTheme.titleLarge)),
+      appBar: AppBar(title: Text("login".tr, style: Theme.of(context).textTheme.titleMedium)),
       body: Column(children: [
         Form(key: _formKey, child: Column(children: [
           TextFormField(controller: controller.emailCtrl, decoration: decoration, validator: (value) {

@@ -12,7 +12,7 @@ toast(String msg, {int duration = 1, int? gravity}) {
   }
 }
 
-showLoading(String msg, {bool transparent = false}) {
+showLoading({String msg = '', bool transparent = false}) {
   Get.dialog(
       LoadingDialog(msg),
       barrierColor: Colors.transparent,
@@ -21,4 +21,14 @@ showLoading(String msg, {bool transparent = false}) {
 
 closeLoading() {
   if(Get.isDialogOpen ?? false)Get.back();
+}
+
+
+showSnackMessage(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text('${message}'),
+      duration: Duration(seconds: 2),
+    ),
+  );
 }
