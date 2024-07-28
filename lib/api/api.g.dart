@@ -13,7 +13,7 @@ class _Api implements Api {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'base';
+    baseUrl ??= 'https://anotherairaccountcommunitynode.onrender.com';
   }
 
   final Dio _dio;
@@ -21,12 +21,12 @@ class _Api implements Api {
   String? baseUrl;
 
   @override
-  Future<VoidModel> create(req) async {
+  Future<VoidModel> prepare(req) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(req);
+    _data.addAll(req.toJson());
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
       method: 'POST',
@@ -35,7 +35,7 @@ class _Api implements Api {
     )
             .compose(
               _dio.options,
-              '/create',
+              '/api/passkey/v1/reg/prepare',
               queryParameters: queryParameters,
               data: _data,
             )
