@@ -1,9 +1,8 @@
-import 'package:HexagonWarrior/api/requests/PrepareRequest.dart';
+import 'package:HexagonWarrior/api/requests/prepare_request.dart';
 import 'package:HexagonWarrior/pages/account/account_controller.dart';
 import 'package:HexagonWarrior/pages/account/login_page.dart';
 import 'package:HexagonWarrior/pages/qrcode/qrcode_page.dart';
 import 'package:HexagonWarrior/pages/settings/settings_page.dart';
-import 'package:HexagonWarrior/utils/ui/loading_dialog.dart';
 import 'package:HexagonWarrior/utils/ui/show_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +77,7 @@ class _MainPageState extends State<MainPage> {
         ]),
         body: Column(children: [
          ElevatedButton(onPressed: () async{
-           final res = await Api().prepare(PrepareRequest(email: "6090@qq.com"));
+
            // final authenticator = Authenticator(true, true);
            // final attestation = await authenticator.makeCredential(MakeCredentialOptions(
            //     clientDataHash: clientDataHash,

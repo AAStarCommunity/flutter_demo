@@ -191,7 +191,8 @@ class _Api implements Api {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = req;
+    final _data = <String, dynamic>{};
+    _data.addAll(req.toJson());
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
       method: 'POST',
@@ -201,6 +202,77 @@ class _Api implements Api {
             .compose(
               _dio.options,
               '/api/passkey/v1/tx/sign/verify',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = VoidModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<VoidModel> transfer(apiKey) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'apiKey': apiKey};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/account/v1/transfer',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = VoidModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<VoidModel> bind(req) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/account/v1/bind',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = VoidModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<VoidModel> signAccount(req) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<VoidModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/account/v1/sign',
               queryParameters: queryParameters,
               data: _data,
             )

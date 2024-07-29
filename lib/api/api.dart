@@ -1,4 +1,6 @@
 
+import 'package:HexagonWarrior/api/requests/bind_account_request.dart';
+import 'package:HexagonWarrior/api/requests/sign_account_request.dart';
 import 'package:HexagonWarrior/api/requests/tx_sign_request.dart';
 import 'package:HexagonWarrior/api/response.dart';
 import 'package:dio/dio.dart';
@@ -44,4 +46,13 @@ abstract class Api{
 
   @POST("/api/passkey/v1/tx/sign/verify")
   Future<VoidModel> txSignVerify(@Body() TxSignVerifyRequest req);
+
+  @POST("/api/account/v1/transfer")
+  Future<VoidModel> transfer(@Query("apiKey") String apiKey);
+
+  @POST("/api/account/v1/bind")
+  Future<VoidModel> bind(@Body() BindAccountRequest req);
+
+  @POST("/api/account/v1/sign")
+  Future<VoidModel> signAccount(@Body() SignAccountRequest req);
 }
