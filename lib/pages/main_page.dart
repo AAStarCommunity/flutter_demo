@@ -1,4 +1,3 @@
-import 'package:HexagonWarrior/api/requests/prepare_request.dart';
 import 'package:HexagonWarrior/pages/account/account_controller.dart';
 import 'package:HexagonWarrior/pages/account/login_page.dart';
 import 'package:HexagonWarrior/pages/qrcode/qrcode_page.dart';
@@ -7,9 +6,6 @@ import 'package:HexagonWarrior/utils/ui/show_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:webauthn/webauthn.dart';
-
-import '../api/api.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = '/';
