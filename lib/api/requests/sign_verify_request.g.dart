@@ -1,17 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'PrepareRequest.dart';
+part of 'sign_verify_request.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PrepareRequest _$PrepareRequestFromJson(Map<String, dynamic> json) =>
-    PrepareRequest(
+SignVerifyRequest _$SignVerifyRequestFromJson(Map<String, dynamic> json) =>
+    SignVerifyRequest(
       email: json['email'] as String,
+      origin: json['origin'] as String,
     );
 
-Map<String, dynamic> _$PrepareRequestToJson(PrepareRequest instance) =>
+Map<String, dynamic> _$SignVerifyRequestToJson(SignVerifyRequest instance) =>
     <String, dynamic>{
       'email': instance.email,
+      'origin': instance.origin,
     };

@@ -1,11 +1,16 @@
-import 'package:HexagonWarrior/api/requests/BeginRequest.dart';
+
+import 'package:HexagonWarrior/api/requests/tx_sign_request.dart';
 import 'package:HexagonWarrior/api/response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
-
 import 'local_http_client.dart';
-import 'requests/PrepareRequest.dart';
+import 'requests/prepare_request.dart';
+import 'requests/reg_request.dart';
+import 'requests/reg_verify_request.dart';
+import 'requests/sign_request.dart';
+import 'requests/sign_verify_request.dart';
+import 'requests/tx_sign_verify_request.dart';
 
 part 'api.g.dart';
 
@@ -20,5 +25,23 @@ abstract class Api{
   Future<VoidModel> prepare(@Body() PrepareRequest req);
 
   @POST('/api/passkey/v1/reg')
-  Future<VoidModel> reg(@Body() BeginRequest req);
+  Future<VoidModel> reg(@Body() RegRequest req);
+
+  @POST("/api/passkey/v1/reg/verify")
+  Future<VoidModel> regVerify(@Body() RegVerifyRequest req);
+
+  @POST("/api/passkey/v1/sign")
+  Future<VoidModel> sign(@Body() SignRequest req);
+
+  @POST("/api/passkey/v1/sign/verify")
+  Future<VoidModel> signVerify(@Body() SignVerifyRequest req);
+
+  @GET("/api/passkey/v1/account/info")
+  Future<VoidModel> getAccountInfo();
+
+  @POST("/api/passkey/v1/tx/sign")
+  Future<VoidModel> txSign(@Body() TxSignRequest req);
+
+  @POST("/api/passkey/v1/tx/sign/verify")
+  Future<VoidModel> txSignVerify(@Body() TxSignVerifyRequest req);
 }

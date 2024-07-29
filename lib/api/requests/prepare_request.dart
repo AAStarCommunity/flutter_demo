@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'PrepareRequest.g.dart';
+part 'prepare_request.g.dart';
 
 @JsonSerializable()
 class PrepareRequest {
