@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailFormKey = GlobalKey<FormState>();
   final _pinCodeFormKey = GlobalKey<FormState>();
 
-  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "layinhz@mzastore.com" : "");
+  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "pda1415@boranora.com" : "");
   StreamController<ErrorAnimationType> _errorCtrl = StreamController<ErrorAnimationType>();
   TextEditingController _pinCodeCtrl = TextEditingController(text: kDebugMode ? "111111" : "");
 
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     _emailCtrl.dispose();
-    _pinCodeCtrl.dispose();
+    // _pinCodeCtrl.dispose();
     _errorCtrl.close();
     super.dispose();
   }

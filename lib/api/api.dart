@@ -12,6 +12,7 @@ import 'requests/prepare_request.dart';
 import 'requests/reg_request.dart';
 import 'requests/sign_request.dart';
 import 'requests/tx_sign_verify_request.dart';
+import 'response/account_info_response.dart';
 import 'response/reg_verify_response.dart';
 
 part 'api.g.dart';
@@ -39,7 +40,7 @@ abstract class Api{
   Future<GenericResponse<dynamic>> signVerify(@Query("email") String email, @Query("origin") String origin, @Body() VerifyRequestBody req);
 
   @GET("/api/passkey/v1/account/info")
-  Future<GenericResponse<dynamic>> getAccountInfo();
+  Future<GenericResponse<AccountInfoResponse>> getAccountInfo();
 
   @POST("/api/passkey/v1/tx/sign")
   Future<GenericResponse<dynamic>> txSign(@Body() TxSignRequest req);

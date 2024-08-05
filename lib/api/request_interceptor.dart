@@ -8,7 +8,7 @@ class RequestInterceptor extends Interceptor{
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    options.headers['Authorization'] = GET.Get.find<SharedPreferences>().token;
+    options.headers['Authorization'] = "Bearer ${GET.Get.find<SharedPreferences>().token}";
     super.onRequest(options, handler);
   }
 

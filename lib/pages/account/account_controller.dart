@@ -21,6 +21,10 @@ const _network = "optimism-sepolia";
 
 class AccountController extends GetxController {
 
+  Future<void> getAccountInfo() async{
+    final resp = await Api().getAccountInfo();
+  }
+
   Future<GenericResponse> register(String email, {String? captcha, String? network = _network}) async{
     try {
       GenericResponse<RegResponse> res = await Api().reg(RegRequest(captcha: captcha!, email: email, origin: _ORIGIN_DOMAIN));
@@ -54,6 +58,7 @@ class AccountController extends GetxController {
 
         final resp = await Api().regVerify(email, _ORIGIN_DOMAIN, network, body);
         if(isNotNull(resp.token)){
+
           return GenericResponse.success("ok");
         }
       }
