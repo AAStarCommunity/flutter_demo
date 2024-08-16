@@ -4,6 +4,7 @@ import 'package:HexagonWarrior/api/api.dart';
 import 'package:HexagonWarrior/api/generic_response.dart';
 import 'package:HexagonWarrior/api/requests/reg_request.dart';
 import 'package:HexagonWarrior/api/requests/sign_request.dart';
+import 'package:HexagonWarrior/api/requests/tx_sign_request.dart';
 import 'package:HexagonWarrior/api/requests/verify_request_body.dart';
 import 'package:HexagonWarrior/api/response/account_info_response.dart';
 import 'package:HexagonWarrior/api/response/reg_response.dart';
@@ -90,6 +91,13 @@ class AccountController extends GetxController with StateMixin<AccountInfo>{
       }
 
     return res;
+  }
+
+  Future<void> txSign() async{
+    final publicKey = await Api().txSign(TxSignRequest());
+    CredentialRequestOptions.fromJson({
+      "publicKey" : {}
+    });
   }
 
   @override
