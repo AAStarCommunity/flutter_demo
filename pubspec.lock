@@ -10,7 +10,7 @@ packages:
     source: hosted
     version: "61.0.0"
   analyzer:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: analyzer
       sha256: ea3d8652bda62982addfd92fdc2d0214e5f82e43325104990d4f4c4a2a313562
@@ -205,10 +205,10 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "1efa911ca7086affd35f463ca2fc1799584fb6aa89883cf0af8e3664d6a02d55"
+      sha256: "99e066ce75c89d6b29903d788a7bb9369cf754f7b24bf70bf4b6d6d6b26853b9"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.3.2"
+    version: "2.3.6"
   dio:
     dependency: "direct main"
     description:
@@ -250,7 +250,7 @@ packages:
     source: hosted
     version: "2.0.5"
   eth_sig_util:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: eth_sig_util
       sha256: "20fdc5ce3864e70e5ade1c1cd03cce4ef01018db00adab107303f9055d26b01a"
@@ -397,8 +397,16 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed:
+    dependency: "direct dev"
+    description:
+      name: freezed
+      sha256: "44c19278dd9d89292cf46e97dc0c1e52ce03275f40a97c5a348e802a924bf40e"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.5.7"
   freezed_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: freezed_annotation
       sha256: c2e2d632dd9b8a2b7751117abcfc2b4888ecfe181bd9fca7170d9ef02e595fe2
@@ -865,10 +873,10 @@ packages:
     dependency: "direct dev"
     description:
       name: retrofit_generator
-      sha256: "5289b5cfc73ba123e238b9d3348a143fcb7f9d93c821525868f8dc3bb497c499"
+      sha256: ba40c4b34a865976b426c59e2731962ac10ce9b36c92a0f3633c5417e272a287
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "5.0.0+1"
+    version: "6.0.0+3"
   sec:
     dependency: transitive
     description:
@@ -1011,7 +1019,7 @@ packages:
     source: hosted
     version: "1.11.1"
   stream_channel:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: stream_channel
       sha256: ba2aa5d8cc609d96bbb2899c28934f9e1af5cddbd60a827822ea467161eb54e7
@@ -1162,14 +1170,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.1.2"
-  userop:
-    dependency: "direct main"
-    description:
-      name: userop
-      sha256: ab3010659a46865bde44503ad6677a6e770c3d48f9b85cb59a9f9944fb2b6794
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.3.0"
   uuid:
     dependency: "direct main"
     description:
@@ -1219,13 +1219,21 @@ packages:
     source: hosted
     version: "0.5.1"
   web3dart:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: web3dart
       sha256: "885e5e8f0cc3c87c09f160a7fce6279226ca41316806f7ece2001959c62ecced"
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.7.3"
+  web3dart_builders:
+    dependency: "direct dev"
+    description:
+      name: web3dart_builders
+      sha256: "8a7f62ae5c348741ad829aa5e4599ff482a128210dff620a6ee3f895db9c0db8"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.2"
   web_socket_channel:
     dependency: transitive
     description:

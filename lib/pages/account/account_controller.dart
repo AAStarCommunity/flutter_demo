@@ -25,8 +25,8 @@ import '../../config/tx_network.dart';
 import '../../utils/validate_util.dart';
 import '../../utils/webauthn/uint8list_converter.dart';
 import 'package:web3dart/web3dart.dart';
-import 'package:userop/userop.dart';
 import 'package:http/http.dart' as http;
+import '../../zero/userop/userop.dart';
 
 const _ORIGIN_DOMAIN = "https://demoweb.aastar.io";
 const _network = "optimism-sepolia";
@@ -127,6 +127,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo>{
       EtherAmount.fromInt(EtherUnit.ether, 10)
     ]);
 
+    final payMasterConfig = paymasterConfig.option;
 
     // final provider = BundlerJsonRpcProvider(0)
     final opts = IPresetBuilderOpts()
