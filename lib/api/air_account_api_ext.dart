@@ -1,7 +1,5 @@
 
 import 'dart:convert';
-import 'dart:js_interop';
-
 import 'package:HexagonWarrior/api/api.dart';
 import 'package:HexagonWarrior/api/requests/verify_request_body.dart';
 import 'package:webauthn/webauthn.dart';
