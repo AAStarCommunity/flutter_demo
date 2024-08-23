@@ -78,7 +78,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
       }
       return res;
     } catch(e, s) {
-      return GenericResponse.errorWithDioException(e as DioException)
+      return GenericResponse.errorWithDioException(e as DioException);
     }
   }
 
