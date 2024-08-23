@@ -32,10 +32,10 @@ class SimpleAccount extends UserOperationBuilder {
   late simple_account_impl.SimpleAccount proxy;
 
   SimpleAccount(
-    this.credentials,
-    String rpcUrl, {
-    IPresetBuilderOpts? opts,
-  }) : super() {
+      this.credentials,
+      String rpcUrl, {
+        IPresetBuilderOpts? opts,
+      }) : super() {
     final web3client = Web3Client.custom(BundlerJsonRpcProvider(
       rpcUrl,
       http.Client(),
@@ -64,8 +64,8 @@ class SimpleAccount extends UserOperationBuilder {
     final results = await Future.wait([
       entryPoint.getNonce(
         (
-          key: nonceKey,
-          sender: EthereumAddress.fromHex(ctx.op.sender),
+        key: nonceKey,
+        sender: EthereumAddress.fromHex(ctx.op.sender),
         ),
       ),
       entryPoint.client.makeRPCCall<String>('eth_getCode', [
@@ -80,66 +80,6 @@ class SimpleAccount extends UserOperationBuilder {
 
   /// Initializes a SimpleAccount object and returns it.
   static Future<SimpleAccount> init(
-    EthPrivateKey credentials,
-    String rpcUrl, {
-    IPresetBuilderOpts? opts,
-  }) async {
-    final instance = SimpleAccount(credentials, rpcUrl, opts: opts);
-
-    final List<String> inputArr = [
-      instance.simpleAccountFactory.self.address.toString(),
-      bytesToHex(
-        instance.simpleAccountFactory.self.function('createAccount').encodeCall(
-          [
-            credentials.address,
-            opts?.salt ?? BigInt.zero,
-          ],
-        ),
-        include0x: true,
-      ),
-    ];
-    instance.initCode =
-        '0x${inputArr.map((hexStr) => hexStr.toString().substring(2)).join('')}';
-    final smartContractAddress = await instance.simpleAccountFactory.getAddress(
-      (
-        owner: credentials.address,
-        salt: opts?.salt ?? BigInt.zero,
-      ),
-    );
-    instance.proxy = simple_account_impl.SimpleAccount(
-      address: smartContractAddress,
-      client: instance.simpleAccountFactory.client,
-    );
-
-    final baseInstance = instance
-        .useDefaults({
-          'sender': instance.proxy.self.address.toString(),
-          'signature': bytesToHex(
-            credentials.signPersonalMessageToUint8List(
-              Uint8List.fromList('0xdead'.codeUnits),
-            ),
-            include0x: true,
-          ),
-        })
-        .useMiddleware(instance.resolveAccount)
-        .useMiddleware(getGasPrice(
-          instance.simpleAccountFactory.client,
-        ));
-
-    final withPM = opts?.paymasterMiddleware != null
-        ? baseInstance.useMiddleware(
-            opts?.paymasterMiddleware as UserOperationMiddlewareFn)
-        : baseInstance.useMiddleware(
-            estimateUserOperationGas(
-              instance.simpleAccountFactory.client,
-            ),
-          );
-
-    return withPM.useMiddleware(signUserOpHash(instance.credentials))
-        as SimpleAccount;
-  }
-
-  static Future<SimpleAccount> custom(
       EthPrivateKey credentials,
       String rpcUrl, {
         IPresetBuilderOpts? opts,
@@ -201,8 +141,8 @@ class SimpleAccount extends UserOperationBuilder {
 
   /// Executes a transaction on the network.
   Future<IUserOperationBuilder> execute(
-    Call call,
-  ) async {
+      Call call,
+      ) async {
     return setCallData(
       bytesToHex(
         proxy.self.function('execute').encodeCall(
@@ -219,8 +159,8 @@ class SimpleAccount extends UserOperationBuilder {
 
   /// Executes a batch transaction on the network.
   Future<IUserOperationBuilder> executeBatch(
-    List<Call> calls,
-  ) async {
+      List<Call> calls,
+      ) async {
     return setCallData(
       bytesToHex(
         proxy.self.function('executeBatch').encodeCall(
