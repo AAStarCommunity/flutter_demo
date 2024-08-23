@@ -33,6 +33,7 @@ Future<void> mint(String receiverAddress, String functionName, String tokenAbiPa
     initCode,
     bundlerRPC,
     origin,
+    tokenAddress,
     opts: opts,
   );
 

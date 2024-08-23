@@ -63,27 +63,23 @@ class AirAccount extends UserOperationBuilder {
         sender: EthereumAddress.fromHex(ctx.op.sender),
         ),
       ),
-      entryPoint.client.makeRPCCall<String>('eth_getCode', [
-        ctx.op.sender,
-        'latest',
-      ])
+      // entryPoint.client.makeRPCCall<String>('eth_getCode', [
+      //   ctx.op.sender,
+      //   'latest',
+      // ])
     ]);
     ctx.op.nonce = results[0];
-    final code = results[1];
-    ctx.op.initCode = code == "0x" ? initCode : "0x";
+    // final code = results[1];
+    // ctx.op.initCode = code == "0x" ? initCode : "0x";
   }
 
   /// Initializes a SimpleAccount object and returns it.
-  static Future<SimpleAccount> init(String initCode, String rpcUrl, String origin, {IPresetBuilderOpts? opts}) async {
+  static Future<SimpleAccount> init(String initCode, String rpcUrl, String origin, EthereumAddress smartContractAddress, {IPresetBuilderOpts? opts}) async {
     final instance = AirAccount(rpcUrl, opts: opts);
 
     instance.initCode = initCode;
-    final smartContractAddress = await instance.simpleAccountFactory.getAddress(
-      (
-      owner: credentials.address,
-      salt: opts?.salt ?? BigInt.zero,
-      ),
-    );
+
+    final senderAddress =
     instance.proxy = simple_account_impl.SimpleAccount(
       address: smartContractAddress,
       client: instance.simpleAccountFactory.client,
