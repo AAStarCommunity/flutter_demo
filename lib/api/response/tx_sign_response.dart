@@ -1,7 +1,7 @@
 // import 'package:json_annotation/json_annotation.dart';
 //
 // @JsonSerializable(genericArgumentFactories: true, explicitToJson: true)
-class TxSignResponse {
+class SignResponse {
   String? challenge;
   int? timeout;
   String? rpId;
@@ -9,7 +9,7 @@ class TxSignResponse {
   String? userVerification;
   Extensions? extensions;
 
-  TxSignResponse(
+  SignResponse(
       {this.challenge,
         this.timeout,
         this.rpId,
@@ -17,7 +17,7 @@ class TxSignResponse {
         this.userVerification,
         this.extensions});
 
-  TxSignResponse.fromJson(Map<String, dynamic> json) {
+  SignResponse.fromJson(Map<String, dynamic> json) {
     challenge = json['challenge'];
     timeout = json['timeout'];
     rpId = json['rpId'];

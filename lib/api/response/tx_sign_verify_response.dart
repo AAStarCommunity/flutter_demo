@@ -1,16 +1,16 @@
 
 
-class TxSignVerifyResponse {
+class SignVerifyResponse {
   int? code;
   String? txdata;
   String? sign;
   String? privateKey;
   String? address;
 
-  TxSignVerifyResponse(
+  SignVerifyResponse(
       {this.code, this.txdata, this.sign, this.privateKey, this.address});
 
-  TxSignVerifyResponse.fromJson(Map<String, dynamic> json) {
+  SignVerifyResponse.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     txdata = json['txdata'];
     sign = json['sign'];

@@ -73,8 +73,11 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
       final api = Api();
       var res = await api.sign(SignRequest(captcha: captcha, email: email, origin: _ORIGIN_DOMAIN));
       if (res.success) {
-        final body = await api.createAssertionFromPublic(res.data, _ORIGIN_DOMAIN);
-        res = await api.signVerify(email, _ORIGIN_DOMAIN, body);
+        final body = await api.createAssertionFromPublic(res.data!.toJson(), _ORIGIN_DOMAIN);
+        final resp = await api.signVerify(email, _ORIGIN_DOMAIN, body);
+        if (isNotNull(resp.token)) {
+          return GenericResponse.success("ok");
+        }
       }
       return res;
     } catch(e, s) {
