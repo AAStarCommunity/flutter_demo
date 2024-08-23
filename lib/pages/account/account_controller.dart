@@ -20,6 +20,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../api/requests/assertion_verify_request_body.dart';
 import '../../api/requests/prepare_request.dart';
 import 'package:webauthn/webauthn.dart';
 import '../../config/tx_network.dart';
@@ -49,7 +50,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo>{
       GenericResponse<RegResponse> res = await Api().reg(RegRequest(captcha: captcha!, email: email, origin: _ORIGIN_DOMAIN));
       if(res.success) {
         final api = Api();
-        final body = await api.createAttestationFromPublicKey(res.data!.toJson(), _ORIGIN_DOMAIN);
+        final body = await api.createAttestationFromPublicKey(res.data!.toJson(), res.data?.authenticatorSelection?.authenticatorAttachment, _ORIGIN_DOMAIN);
         final resp = await api.regVerify(email, _ORIGIN_DOMAIN, network, body);
         if(isNotNull(resp.token)){
 
@@ -69,7 +70,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo>{
   }
 
 
-  Future<GenericResponse> login(String email, VerifyRequestBody body, {String? captcha}) async{
+  Future<GenericResponse> login(String email, AssertionVerifyRequestBody body, {String? captcha}) async{
       var res = await Api().sign(SignRequest(captcha: captcha, email: email, origin: _ORIGIN_DOMAIN));
       if(res.success) {
         res = await Api().signVerify(email, _ORIGIN_DOMAIN, body);

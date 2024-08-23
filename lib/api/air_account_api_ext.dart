@@ -36,7 +36,7 @@ extension ApiExt on Api {
    return body;
  }
 
- Future<AttestationVerifyRequestBody> createAttestationFromPublicKey(Map<String, dynamic> publicKey, String authenticatorAttachment, String origin) async{
+ Future<AttestationVerifyRequestBody> createAttestationFromPublicKey(Map<String, dynamic> publicKey, String? authenticatorAttachment, String origin) async{
 
     final webApi = WebAPI();
     final ccop = CreateCredentialOptions.fromJson({"publicKey" : publicKey});
