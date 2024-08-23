@@ -62,6 +62,7 @@ class Assets {
   static const String presetIndex = 'lib/zero/userop/src/preset/index.dart';
   static const String profileMyProfile = 'lib/pages/profile/my_profile.dart';
   static const String qrcodeQrcodePage = 'lib/pages/qrcode/qrcode_page.dart';
+  static const String requestsAssertionVerifyRequestBody = 'lib/api/requests/assertion_verify_request_body.dart';
   static const String requestsBindAccountRequest = 'lib/api/requests/bind_account_request.dart';
   static const String requestsBindAccountRequest.g = 'lib/api/requests/bind_account_request.g.dart';
   static const String requestsPrepareRequest = 'lib/api/requests/prepare_request.dart';

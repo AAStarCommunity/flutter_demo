@@ -1,11 +1,42 @@
 
+import 'dart:convert';
+import 'dart:js_interop';
+
 import 'package:HexagonWarrior/api/api.dart';
 import 'package:HexagonWarrior/api/requests/verify_request_body.dart';
 import 'package:webauthn/webauthn.dart';
 
+import '../utils/webauthn/uint8list_converter.dart';
+import 'requests/assertion_verify_request_body.dart';
+
 extension ApiExt on Api {
 
- Future<VerifyRequestBody> createVerifyRequestBodyFromPublicKey(Map<String, dynamic> publicKey, String origin) async{
+ Future<AssertionVerifyRequestBody> createAssertionFromPublic(Map<String, dynamic> publicKey, String origin) async{
+   final webApi = WebAPI();
+   final rpOptions = CredentialRequestOptions.fromJson({"publicKey" : publicKey});
+   final (clientData, getAssertionOptions) = await webApi.createGetAssertionOptions(
+     origin,
+     rpOptions,
+     true,
+   );
+   final assertion = await Authenticator.handleGetAssertion(getAssertionOptions);
+   final responseObj = await webApi.createAssertionResponse(clientData, assertion);
+
+   final body = AssertionVerifyRequestBody(
+       id: const Uint8ListConverter().toJson(responseObj.rawId),
+       rawId: const Uint8ListConverter().toJson(responseObj.rawId),
+       response: AssertionVerifyResponse(
+          authenticatorData: const Uint8ListConverter().toJson(responseObj.response.authenticatorData),
+          clientDataJSON: const Uint8ListConverter().toJson(responseObj.response.clientDataJSON),
+          signature: const Uint8ListConverter().toJson(responseObj.response.signature),
+          userHandle: const Uint8ListConverter().toJson(responseObj.response.userHandle)
+       ),
+       type: responseObj.type.value,
+   );
+   return body;
+ }
+
+ Future<AttestationVerifyRequestBody> createAttestationFromPublicKey(Map<String, dynamic> publicKey, String authenticatorAttachment, String origin) async{
 
     final webApi = WebAPI();
     final ccop = CreateCredentialOptions.fromJson({"publicKey" : publicKey});
@@ -18,7 +49,7 @@ extension ApiExt on Api {
     final jsonObj = jsonDecode(json);
 
     final body = VerifyRequestBody(
-        authenticatorAttachment: res.data?.authenticatorSelection?.authenticatorAttachment,
+        authenticatorAttachment: authenticatorAttachment,
         clientExtensionResults: <String, dynamic>{},
         id: const Uint8ListConverter().toJson(responseObj.rawId),
         rawId: const Uint8ListConverter().toJson(responseObj.rawId),

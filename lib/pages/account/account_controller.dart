@@ -49,7 +49,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo>{
       GenericResponse<RegResponse> res = await Api().reg(RegRequest(captcha: captcha!, email: email, origin: _ORIGIN_DOMAIN));
       if(res.success) {
         final api = Api();
-        final body = await api.createVerifyRequestBodyFromPublicKey(res.data!.toJson(), _ORIGIN_DOMAIN);
+        final body = await api.createAttestationFromPublicKey(res.data!.toJson(), _ORIGIN_DOMAIN);
         final resp = await api.regVerify(email, _ORIGIN_DOMAIN, network, body);
         if(isNotNull(resp.token)){
 

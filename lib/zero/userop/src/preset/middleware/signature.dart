@@ -37,7 +37,7 @@ UserOperationMiddlewareFn signUserOpHashUseSignature(String origin) {
     final api = Api();
     final resp = await api.txSign(TxSignRequest(nonce: nonce, origin: origin, txdata: unsignedOpHash));
     if(resp.success) {
-      final body = await api.createVerifyRequestBodyFromPublicKey(resp.data!.toJson(), origin);
+      final body = await api.createAssertionFromPublic(resp.data!.toJson(), origin);
       final res = await Api().txSignVerify(nonce, origin, body);
       if(res.success) {
         ctx.op.signature = res.data!.sign!;
