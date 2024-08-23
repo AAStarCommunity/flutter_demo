@@ -48,12 +48,12 @@ extension ApiExt on Api {
     final json = attestation.asJSON();
     final jsonObj = jsonDecode(json);
 
-    final body = VerifyRequestBody(
+    final body = AttestationVerifyRequestBody(
         authenticatorAttachment: authenticatorAttachment,
         clientExtensionResults: <String, dynamic>{},
         id: const Uint8ListConverter().toJson(responseObj.rawId),
         rawId: const Uint8ListConverter().toJson(responseObj.rawId),
-        response: VerifyResponse(
+        response: AttestationVerifyResponse(
             attestationObject: const Uint8ListConverter().toJson(responseObj.response.attestationObject),
             clientDataJSON: const Uint8ListConverter().toJson(responseObj.response.clientDataJSON),//const Uint8ListConverter().toJson(utf8.encode(jsonEncode({"type": "webauthn.create", "challenge": res.data!.challenge, "origin": _ORIGIN_DOMAIN, "crossOrigin": false}))),
             transports: ["hybrid", AuthenticatorTransports.internal.value],

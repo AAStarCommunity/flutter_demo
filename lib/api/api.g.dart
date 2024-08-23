@@ -196,14 +196,14 @@ class _Api implements Api {
   }
 
   @override
-  Future<GenericResponse<dynamic>> txSign(req) async {
+  Future<GenericResponse<TxSignResponse>> txSign(req) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GenericResponse<dynamic>>(Options(
+        _setStreamType<GenericResponse<TxSignResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -215,22 +215,26 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GenericResponse<dynamic>.fromJson(
+    final value = GenericResponse<TxSignResponse>.fromJson(
       _result.data!,
-      (json) => json as dynamic,
+          (json) => TxSignResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
-  Future<GenericResponse<dynamic>> txSignVerify(req) async {
+  Future<GenericResponse<TxSignVerifyResponse>> txSignVerify(nonce, origin, req) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'nonce': nonce,
+      r'origin': origin,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(req.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GenericResponse<dynamic>>(Options(
+        _setStreamType<GenericResponse<TxSignVerifyResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -242,9 +246,9 @@ class _Api implements Api {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = GenericResponse<dynamic>.fromJson(
+    final value = GenericResponse<TxSignVerifyResponse>.fromJson(
       _result.data!,
-      (json) => json as dynamic,
+          (json) => TxSignVerifyResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

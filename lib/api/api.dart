@@ -1,4 +1,5 @@
 import 'package:HexagonWarrior/api/generic_response.dart';
+import 'package:HexagonWarrior/api/requests/assertion_verify_request_body.dart';
 import 'package:HexagonWarrior/api/requests/bind_account_request.dart';
 import 'package:HexagonWarrior/api/requests/sign_account_request.dart';
 import 'package:HexagonWarrior/api/requests/tx_sign_request.dart';
@@ -33,13 +34,13 @@ abstract class Api{
   Future<GenericResponse<RegResponse>> reg(@Body() RegRequest req);
 
   @POST("/api/passkey/v1/reg/verify")
-  Future<RegVerifyResponse> regVerify(@Query("email") String email, @Query("origin") String origin, @Query("network") String? network, @Body() VerifyRequestBody req);
+  Future<RegVerifyResponse> regVerify(@Query("email") String email, @Query("origin") String origin, @Query("network") String? network, @Body() AttestationVerifyRequestBody req);
 
   @POST("/api/passkey/v1/sign")
   Future<GenericResponse<dynamic>> sign(@Body() SignRequest req);
 
   @POST("/api/passkey/v1/sign/verify")
-  Future<GenericResponse<dynamic>> signVerify(@Query("email") String email, @Query("origin") String origin, @Body() VerifyRequestBody req);
+  Future<GenericResponse<dynamic>> signVerify(@Query("email") String email, @Query("origin") String origin, @Body() AssertionVerifyRequestBody req);
 
   @GET("/api/passkey/v1/account/info")
   Future<GenericResponse<AccountInfoResponse>> getAccountInfo();
@@ -48,7 +49,7 @@ abstract class Api{
   Future<GenericResponse<TxSignResponse>> txSign(@Body() TxSignRequest req);
 
   @POST("/api/passkey/v1/tx/sign/verify")
-  Future<GenericResponse<TxSignVerifyResponse>> txSignVerify(@Query("nonce") String nonce, @Query("origin") String origin, @Body() VerifyRequestBody req);
+  Future<GenericResponse<TxSignVerifyResponse>> txSignVerify(@Query("nonce") String nonce, @Query("origin") String origin, @Body() AssertionVerifyRequestBody req);
 
   @POST("/api/account/v1/transfer")
   Future<GenericResponse<dynamic>> transfer(@Query("apiKey") String apiKey);
