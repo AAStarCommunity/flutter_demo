@@ -4,6 +4,8 @@ import 'package:HexagonWarrior/api/requests/sign_account_request.dart';
 import 'package:HexagonWarrior/api/requests/tx_sign_request.dart';
 import 'package:HexagonWarrior/api/requests/verify_request_body.dart';
 import 'package:HexagonWarrior/api/response/reg_response.dart';
+import 'package:HexagonWarrior/api/response/tx_sign_response.dart';
+import 'package:HexagonWarrior/api/response/tx_sign_verify_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
@@ -43,10 +45,10 @@ abstract class Api{
   Future<GenericResponse<AccountInfoResponse>> getAccountInfo();
 
   @POST("/api/passkey/v1/tx/sign")
-  Future<GenericResponse<dynamic>> txSign(@Body() TxSignRequest req);
+  Future<GenericResponse<TxSignResponse>> txSign(@Body() TxSignRequest req);
 
   @POST("/api/passkey/v1/tx/sign/verify")
-  Future<GenericResponse<dynamic>> txSignVerify(@Body() TxSignVerifyRequest req);
+  Future<GenericResponse<TxSignVerifyResponse>> txSignVerify(@Query("nonce") String nonce, @Query("origin") String origin, @Body() VerifyRequestBody req);
 
   @POST("/api/account/v1/transfer")
   Future<GenericResponse<dynamic>> transfer(@Query("apiKey") String apiKey);

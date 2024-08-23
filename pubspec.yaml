@@ -63,3 +63,6 @@ flutter:
     - assets/
     - assets/images/
     - assets/contracts/
+    - lib/api/
+    - lib/api/requests/
+    - lib/api/response/

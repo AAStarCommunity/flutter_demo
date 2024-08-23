@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:HexagonWarrior/api/air_account_api_ext.dart';
 import 'package:HexagonWarrior/api/api.dart';
 import 'package:HexagonWarrior/api/generic_response.dart';
 import 'package:HexagonWarrior/api/local_http_client.dart';
@@ -47,34 +48,9 @@ class AccountController extends GetxController with StateMixin<AccountInfo>{
     try {
       GenericResponse<RegResponse> res = await Api().reg(RegRequest(captcha: captcha!, email: email, origin: _ORIGIN_DOMAIN));
       if(res.success) {
-        final webApi = WebAPI();
-        final ccop = CreateCredentialOptions.fromJson({"publicKey" : res.data!.toJson()});
-        final (clientData, options) = await webApi.createMakeCredentialOptions(_ORIGIN_DOMAIN, ccop, true);
-
-        final attestation = await Authenticator.handleMakeCredential(options);
-        final responseObj = await webApi.createAttestationResponse(clientData, attestation);
-
-        final json = attestation.asJSON();
-        final jsonObj = jsonDecode(json);
-
-        final body = VerifyRequestBody(
-            authenticatorAttachment: res.data?.authenticatorSelection?.authenticatorAttachment,
-            clientExtensionResults: <String, dynamic>{},
-            id: const Uint8ListConverter().toJson(responseObj.rawId),
-            rawId: const Uint8ListConverter().toJson(responseObj.rawId),
-            response: VerifyResponse(
-                attestationObject: const Uint8ListConverter().toJson(responseObj.response.attestationObject),
-                clientDataJSON: const Uint8ListConverter().toJson(responseObj.response.clientDataJSON),//const Uint8ListConverter().toJson(utf8.encode(jsonEncode({"type": "webauthn.create", "challenge": res.data!.challenge, "origin": _ORIGIN_DOMAIN, "crossOrigin": false}))),
-                transports: ["hybrid", AuthenticatorTransports.internal.value],
-                authenticatorData: jsonObj['authData'],
-                publicKey: const Uint8ListConverter().toJson(utf8.encode(jsonEncode(ccop.publicKey.toJson()))),//publicKey,
-                publicKeyAlgorithm: jsonObj['attStmt']['alg']
-            ),
-            type: responseObj.type.value,
-            transports: ["hybrid", AuthenticatorTransports.internal.value]
-        );
-
-        final resp = await Api().regVerify(email, _ORIGIN_DOMAIN, network, body);
+        final api = Api();
+        final body = await api.createVerifyRequestBodyFromPublicKey(res.data!.toJson(), _ORIGIN_DOMAIN);
+        final resp = await api.regVerify(email, _ORIGIN_DOMAIN, network, body);
         if(isNotNull(resp.token)){
 
           return GenericResponse.success("ok");
