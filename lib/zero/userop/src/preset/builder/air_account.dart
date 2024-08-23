@@ -73,8 +73,8 @@ class AirAccount extends UserOperationBuilder {
     // ctx.op.initCode = code == "0x" ? initCode : "0x";
   }
 
-  /// Initializes a SimpleAccount object and returns it.
-  static Future<SimpleAccount> init(String initCode, String rpcUrl, String origin, EthereumAddress smartContractAddress, {IPresetBuilderOpts? opts}) async {
+  /// Initializes a AirAccount object and returns it.
+  static Future<AirAccount> init(String initCode, String rpcUrl, String origin, EthereumAddress smartContractAddress, {IPresetBuilderOpts? opts}) async {
     final instance = AirAccount(rpcUrl, opts: opts);
 
     instance.initCode = initCode;
@@ -104,7 +104,7 @@ class AirAccount extends UserOperationBuilder {
     );
 
     return withPM.useMiddleware(signUserOpHashUseSignature(origin))
-    as SimpleAccount;
+    as AirAccount;
   }
 
   /// Executes a transaction on the network.

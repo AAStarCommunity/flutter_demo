@@ -18,7 +18,6 @@ Future<void> mint(String receiverAddress, String functionName, String tokenAbiPa
   final targetAddress = EthereumAddress.fromHex(receiverAddress);
   final amount = isNotNull(amountStr) ? BigInt.parse(amountStr!) : BigInt.zero;
 
-  final signingKey = EthPrivateKey.fromHex('YOUR_PRIVATE_KEY');
   final bundlerRPC = op_sepolia.bundler.first.url;
 
   final paymasterMiddleware = verifyingPaymaster(
