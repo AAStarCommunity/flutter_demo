@@ -24,6 +24,8 @@ import '../../zero/userop/userop.dart';
 const _ORIGIN_DOMAIN = "https://demoweb.aastar.io";
 const _network = "optimism-sepolia";
 
+const ORIGIN_DOMAIN = _ORIGIN_DOMAIN;
+
 class AccountController extends GetxController with StateMixin<AccountInfo> {
   Future<AccountInfo?> getAccountInfo() async {
     final resp = await Api().getAccountInfo();
