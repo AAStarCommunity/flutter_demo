@@ -28,11 +28,11 @@ class _LoginPageState extends State<LoginPage> {
   final _emailFormKey = GlobalKey<FormState>();
   final _pinCodeFormKey = GlobalKey<FormState>();
 
-  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "saadmcctjtm@easygbd.com" : "");
+  TextEditingController _emailCtrl = TextEditingController(text: kDebugMode ? "luchylulove@omg-greatfood.com" : "");
   StreamController<ErrorAnimationType> _errorCtrl = StreamController<ErrorAnimationType>();
   TextEditingController _pinCodeCtrl = TextEditingController(text: kDebugMode ? "111111" : "");
 
-  bool _pinCodeVisible = false;
+  bool _pinCodeVisible = kDebugMode;
 
   String? _validatePinCode(String? v) {
     if (v == null || v.length < 6) {
