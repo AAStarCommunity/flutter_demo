@@ -45,7 +45,7 @@ Future<void> mint(String aaAddress, String functionName, String tokenAbiPath, St
   final sendOpts = ISendUserOperationOpts()
     ..dryRun = false
     ..onBuild = (IUserOperation ctx) async {
-      logger.i("Signed UserOperation：" + ctx.opToJson().toString());
+      logger.i("Signed UserOperation：" + ctx.toJson().toString());
     };
 
   String abiStr = await rootBundle.loadString(tokenAbiPath);
