@@ -104,15 +104,15 @@ class _MainPageState extends State<MainPage> {
                   Row(children: [
                     Text("USDT Balance", style: Theme.of(context).textTheme.titleMedium),
                     Spacer(),
-                    Text("\$0", style: Theme.of(context).textTheme.titleLarge)
+                    Text("\$${state?.balance ?? 0}", style: Theme.of(context).textTheme.titleLarge)
                   ]),
                   const SizedBox(height: 20),
                   Wrap(spacing: 12, children: [
                     FilledButton(onPressed: (){
-                      mint(state!.aa!, "_mint", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amountStr: "5");
+                      _accountCtrl.mintUsdt();
                     }, child: Text("Mint"), style: buttonStyle),
                     FilledButton(onPressed: (){
-                      mint(state!.aa!, "transfer", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amountStr: "5", receiver: "0x046Bd46B76c6Bd648719C988Fa2a839126a68a0F");
+                      _accountCtrl.sendUsdt();
                     }, child: Text("Send"), style: buttonStyle),
                     FilledButton(onPressed: (){}, child: Text("Mint USDT And Mint NFT"), style: buttonStyle)
                   ]),
