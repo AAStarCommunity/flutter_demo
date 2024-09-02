@@ -22,15 +22,14 @@ Future<String?> getBalance(String tokenAbiPath, String aaAddress) async{
   final contractAddress = op_sepolia.contracts.usdt;
   final web3Client = Web3Client.custom(BundlerJsonRpcProvider(op_sepolia.rpc, http.Client()));
   final response = await ContractsHelper.readFromContract(web3Client, contractName, contractAddress, "balanceOf", [EthereumAddress.fromHex(aaAddress)], jsonInterface: jsonEncode(abiObj['abi']));
-  logger.i("余额：${response}" );
-  return response.firstOrNull?.toString();
+  return EtherAmount.fromBigInt(EtherUnit.ether, (response.first as BigInt)).getInEther.toString();
 }
 
-Future<String?> mint(String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, {String? amountStr, String? receiver}) async {
+Future<String?> mint(String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, {int? amount, String? receiver}) async {
   final contractName = tokenAbiPath.substring(tokenAbiPath.lastIndexOf("/") + 1, tokenAbiPath.lastIndexOf("."));
   final tokenAddress = EthereumAddress.fromHex(op_sepolia.contracts.usdt);
   final targetAddress = EthereumAddress.fromHex(receiver ?? aaAddress);
-  final amount = isNotNull(amountStr) ? BigInt.parse(amountStr!) : BigInt.zero;
+  final etherAmount = EtherAmount.fromInt(EtherUnit.ether, amount ?? 0).getInEther;
 
   final bundlerRPC = op_sepolia.bundler.first.url;
   final rpcUrl = op_sepolia.rpc;
@@ -74,7 +73,7 @@ Future<String?> mint(String aaAddress, String functionName, String tokenAbiPath,
       functionName,//_mint, mint
       [
         targetAddress,
-        amount,
+        etherAmount,
       ],
       include0x: true,
       jsonInterface: jsonEncode(abiObj['abi'])

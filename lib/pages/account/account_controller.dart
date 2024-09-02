@@ -42,12 +42,14 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
   }
 
   mintUsdt() async{
-   final balance = await mint(state!.aa!, "_mint", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amountStr: "5");
+   final balance = await mint(state!.aa!, "_mint", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amount: 5);
    change(state?..balance = balance, status: RxStatus.success());
   }
 
   sendUsdt() async{
-    final balance = await mint(state!.aa!, "transfer", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amountStr: "5", receiver: "0x046Bd46B76c6Bd648719C988Fa2a839126a68a0F");
+    //0xdC581f4b51a3EC314712F0fBa93Ee3081B57e1Db
+    //"0x046Bd46B76c6Bd648719C988Fa2a839126a68a0F"
+    final balance = await mint(state!.aa!, "transfer", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amount: 1, receiver: "0xdC581f4b51a3EC314712F0fBa93Ee3081B57e1Db");
     change(state?..balance = balance, status: RxStatus.success());
   }
 

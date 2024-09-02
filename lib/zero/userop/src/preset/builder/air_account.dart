@@ -63,9 +63,9 @@ class AirAccount extends UserOperationBuilder {
 
     final nonce = await entryPoint.getNonce((key: nonceKey, sender: EthereumAddress.fromHex(ctx.op.sender)));
     ctx.op.nonce = nonce;
-    ctx.op.initCode = nonce == 0 ? initCode : "0x";
+    ctx.op.initCode = nonce == BigInt.zero ? initCode : "0x";
 
-    logger.i("nonce: ${nonce}, initCode: ${ctx.op.initCode}");
+    logger.i("nonce: ${nonce}, initCode: ${ctx.op.initCode}, account initCode: ${initCode}, ${nonce == BigInt.zero}");
     // ctx.op.nonce = await entryPoint.getNonce((key: nonceKey, sender: EthereumAddress.fromHex(ctx.op.sender)));
     // final code = results[1];
     // ctx.op.nonce = BigInt.zero;
