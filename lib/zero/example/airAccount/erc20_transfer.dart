@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/v4.dart';
 import 'package:web3dart/crypto.dart';
-
+import 'dart:math' as math;
 import '../../userop/userop.dart';
 import 'package:flutter/services.dart' show rootBundle;
 // import 'package:web3dart/crypto.dart';assets/contracts/TetherToken.json
@@ -22,14 +22,16 @@ Future<String?> getBalance(String tokenAbiPath, String aaAddress) async{
   final contractAddress = op_sepolia.contracts.usdt;
   final web3Client = Web3Client.custom(BundlerJsonRpcProvider(op_sepolia.rpc, http.Client()));
   final response = await ContractsHelper.readFromContract(web3Client, contractName, contractAddress, "balanceOf", [EthereumAddress.fromHex(aaAddress)], jsonInterface: jsonEncode(abiObj['abi']));
-  return EtherAmount.fromBigInt(EtherUnit.ether, (response.first as BigInt)).getInEther.toString();
+  return formatUnits(response.first as BigInt, 6);
 }
 
 Future<String?> mint(String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, {int? amount, String? receiver}) async {
   final contractName = tokenAbiPath.substring(tokenAbiPath.lastIndexOf("/") + 1, tokenAbiPath.lastIndexOf("."));
   final tokenAddress = EthereumAddress.fromHex(op_sepolia.contracts.usdt);
   final targetAddress = EthereumAddress.fromHex(receiver ?? aaAddress);
-  final etherAmount = EtherAmount.fromInt(EtherUnit.ether, amount ?? 0).getInEther;
+  final etherAmount = parseUnits("${amount ?? 0}", 6);
+
+  logger.i("amount : ${etherAmount}");
 
   final bundlerRPC = op_sepolia.bundler.first.url;
   final rpcUrl = op_sepolia.rpc;
@@ -91,4 +93,22 @@ Future<String?> mint(String aaAddress, String functionName, String tokenAbiPath,
   final ev = await res.wait();
   debugPrint('Transaction hash: ${ev?.transactionHash}');
   return await getBalance(tokenAbiPath, aaAddress);
+}
+
+String formatUnits(BigInt value, int decimals) {
+  // 将 BigInt 转换为 double 以处理小数
+  double base = math.pow(10, decimals).toDouble();
+  double formattedValue = value.toDouble() / base;
+
+  // 转换为字符串，并确保显示固定的小数位数
+  return formattedValue.toStringAsFixed(decimals);
+}
+
+BigInt parseUnits(String value, int decimals) {
+  // 将输入值转换为 double，并乘以 10^decimals
+  double base = math.pow(10, decimals).toDouble();
+  double parsedValue = double.parse(value) * base;
+
+  // 返回 BigInt 表示的最小单位值
+  return BigInt.from(parsedValue);
 }
