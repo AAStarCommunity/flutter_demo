@@ -8,15 +8,17 @@ import 'package:HexagonWarrior/utils/validate_util.dart';
 import 'package:HexagonWarrior/zero/userop/src/preset/builder/air_account.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:uuid/v4.dart';
+import 'package:web3dart/crypto.dart';
 
 import '../../userop/userop.dart';
 import 'package:flutter/services.dart' show rootBundle;
 // import 'package:web3dart/crypto.dart';assets/contracts/TetherToken.json
 
-Future<void> mint(String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, {String? amountStr}) async {
+Future<void> mint(String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, {String? amountStr, String? receiver}) async {
   final contractName = tokenAbiPath.substring(tokenAbiPath.lastIndexOf("/") + 1, tokenAbiPath.lastIndexOf("."));
   final tokenAddress = EthereumAddress.fromHex(op_sepolia.contracts.usdt);
-  final targetAddress = EthereumAddress.fromHex(aaAddress);
+  final targetAddress = EthereumAddress.fromHex(receiver ?? aaAddress);
   final amount = isNotNull(amountStr) ? BigInt.parse(amountStr!) : BigInt.zero;
 
   final bundlerRPC = op_sepolia.bundler.first.url;
@@ -28,6 +30,7 @@ Future<void> mint(String aaAddress, String functionName, String tokenAbiPath, St
   );
 
   final IPresetBuilderOpts opts = IPresetBuilderOpts()
+  ..nonceKey = BigInt.from(hexToDartInt(UuidV4().generate().replaceAll("-", "").substring(0, 6)))
   ..paymasterMiddleware = paymasterMiddleware;
   //..overrideBundlerRpc = bundlerRPC;
 

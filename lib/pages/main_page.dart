@@ -111,7 +111,9 @@ class _MainPageState extends State<MainPage> {
                     FilledButton(onPressed: (){
                       mint(state!.aa!, "_mint", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amountStr: "5");
                     }, child: Text("Mint"), style: buttonStyle),
-                    FilledButton(onPressed: (){}, child: Text("Send"), style: buttonStyle),
+                    FilledButton(onPressed: (){
+                      mint(state!.aa!, "transfer", "assets/contracts/TetherToken.json", state!.initCode!, ORIGIN_DOMAIN, amountStr: "5", receiver: "0x046Bd46B76c6Bd648719C988Fa2a839126a68a0F");
+                    }, child: Text("Send"), style: buttonStyle),
                     FilledButton(onPressed: (){}, child: Text("Mint USDT And Mint NFT"), style: buttonStyle)
                   ]),
                 ])),
