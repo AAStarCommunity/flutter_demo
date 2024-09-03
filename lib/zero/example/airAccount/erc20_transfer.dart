@@ -13,13 +13,13 @@ import 'dart:math' as math;
 import '../../userop/userop.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-Future<String?> getBalance(String rpcUrl, String contractAddress, String tokenAbiPath, String aaAddress) async{
+Future<String?> getBalance(String rpcUrl, String contractAddress, String tokenAbiPath, String aaAddress, {bool decimals = true}) async{
   final contractName = tokenAbiPath.substring(tokenAbiPath.lastIndexOf("/") + 1, tokenAbiPath.lastIndexOf("."));
   String abiStr = await rootBundle.loadString(tokenAbiPath);
   final abiObj = jsonDecode(abiStr);
   final web3Client = Web3Client.custom(BundlerJsonRpcProvider(rpcUrl, http.Client()));
   final response = await ContractsHelper.readFromContract(web3Client, contractName, contractAddress, "balanceOf", [EthereumAddress.fromHex(aaAddress)], jsonInterface: jsonEncode(abiObj['abi']));
-  return formatUnits(response.first as BigInt, 6);
+  return decimals ? formatUnits(response.first as BigInt, 6) : "${response.first as BigInt}";
 }
 
 Future<String?> mint(String contractAddress, String bundlerUrl, String rpcUrl, String paymasterUrl, Map<String, dynamic> paymasterParams, String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, {int? amount, String? receiver}) async {
@@ -91,9 +91,6 @@ Future<String?> mint(String contractAddress, String bundlerUrl, String rpcUrl, S
 Future<List<String?>> mintUsdtAndNFT(String aaAddress, String usdtFunctionName, String usdtTokenAbiPath, String nftFunctionName, String nftTokenAbiPath, String initCode, String origin, {int? amount, String? receiver}) async {
 
   final targetAddress = EthereumAddress.fromHex(receiver ?? aaAddress);
-  final etherAmount = parseUnits("${amount ?? 0}", 6);
-
-  logger.i("amount : ${etherAmount}");
 
   final bundlerRPC = op_sepolia.bundler.first.url;
   final rpcUrl = op_sepolia.rpc;
@@ -138,7 +135,7 @@ Future<List<String?>> mintUsdtAndNFT(String aaAddress, String usdtFunctionName, 
         usdtFunctionName,//_mint, mint
         [
           targetAddress,
-          etherAmount,
+          parseUnits("${amount ?? 0}", 6),
         ],
         include0x: true,
         jsonInterface: jsonEncode(usdtAbiObj['abi'])
@@ -159,14 +156,14 @@ Future<List<String?>> mintUsdtAndNFT(String aaAddress, String usdtFunctionName, 
         nftFunctionName,//_mint, mint
         [
           targetAddress,
-          etherAmount,
+          BigInt.from(amount!),
         ],
         include0x: true,
         jsonInterface: jsonEncode(nftAbiObj['abi'])
     ),
   );
 
-  final userOp = await airAccount.executeBatch([callNFT, callUsdt]);
+  final userOp = await airAccount.executeBatch([callUsdt, callNFT]);
 
   final res = await client.sendUserOperation(
     userOp,
@@ -178,7 +175,7 @@ Future<List<String?>> mintUsdtAndNFT(String aaAddress, String usdtFunctionName, 
   final ev = await res.wait();
   debugPrint('Transaction hash: ${ev?.transactionHash}');
   final usdtBalance = await getBalance(rpcUrl, usdtTokenAddress.toString(), usdtTokenAbiPath, aaAddress);
-  final nftBalance = await getBalance(rpcUrl, nftTokenAddress.toString(), nftTokenAbiPath, aaAddress);
+  final nftBalance = await getBalance(rpcUrl, nftTokenAddress.toString(), nftTokenAbiPath, aaAddress, decimals: false);
   return [usdtBalance, nftBalance];
 }
 

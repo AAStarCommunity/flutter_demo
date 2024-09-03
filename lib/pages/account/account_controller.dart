@@ -39,7 +39,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
         final usdtContractAddress = op_sepolia.contracts.usdt;
         final nftContractAddress = op_sepolia.contracts.nft;
         final usdtBalance = await getBalance(rpcUrl, usdtContractAddress, _usdtTokenAbiPath, account.aa!);
-        final nftBalance = await getBalance(rpcUrl, nftContractAddress, _nftTokenAbiPath, account.aa!);
+        final nftBalance = await getBalance(rpcUrl, nftContractAddress, _nftTokenAbiPath, account.aa!, decimals: false);
         account.usdtBalance = usdtBalance;
         account.nftBalance = nftBalance;
         change(account, status: RxStatus.success());
