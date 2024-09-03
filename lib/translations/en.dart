@@ -17,6 +17,9 @@ const en = {
   "appearance": "Appearance",
   "complete_pin_code" : "请输入有效的验证码",
   "codeSent": "Pin code sent",
+  "qrCode": "QR Code",
+  "download": "Save",
+  "scanQrCode": "Scan",
   ..._easy_refresh
 };
 
