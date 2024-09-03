@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:HexagonWarrior/pages/qrcode/transfer_dialog.dart';
 import 'package:HexagonWarrior/utils/ui/show_toast.dart';
+import 'package:HexagonWarrior/utils/validate_util.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -107,14 +109,25 @@ class _QRCodePageState extends State<QRCodePage> {
     }
   }
 
-  void _onQRViewCreated(QRViewController controller) {
+  bool _flag = false;
+
+  void _onQRViewCreated(QRViewController controller, String sender) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      print(scanData.code);
+      final code = scanData.code;
+      if(isNotNull(code)) {
+        if(_flag){
+          return;
+        }
+        _flag = true;
+        Get.offAndToNamed(ScanResultPage.routeName, parameters: {"code" : code!})?.then((_){
+          _flag = false;
+        });
+      }
     });
   }
 
-  void _startQRScan() {
+  void _startQRScan(String sender) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => Scaffold(
               extendBodyBehindAppBar: true,
@@ -127,7 +140,9 @@ class _QRCodePageState extends State<QRCodePage> {
               ),
               body: QRView(
                 key: qrKey,
-                onQRViewCreated: _onQRViewCreated,
+                onQRViewCreated: (ctrl) {
+                  _onQRViewCreated(ctrl, sender);
+                },
                 overlay: QrScannerOverlayShape(
                   borderColor: Colors.red,
                   borderRadius: 10,
@@ -188,7 +203,7 @@ class _QRCodePageState extends State<QRCodePage> {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   FilledButton(
                     onPressed: () {
-                      _startQRScan();
+                      _startQRScan(state?.aa ?? "");
                     },
                     child: Text('scanQrCode'.tr),
                   ).marginOnly(top: 24),
