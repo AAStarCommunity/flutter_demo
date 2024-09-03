@@ -129,7 +129,7 @@ class _MainPageState extends State<MainPage> {
                   ]),
                   const SizedBox(height: 20),
                   FilledButton(onPressed: (){
-
+                      _accountCtrl.mintNft();
                   }, child: Text("Mint"), style: buttonStyle)
                 ]))
               ]);

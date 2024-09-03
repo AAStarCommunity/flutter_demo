@@ -60,6 +60,17 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
     }
   }
 
+  mintNft() async{
+    final contractAddress = op_sepolia.contracts.nft;
+    final bundlerUrl = op_sepolia.bundler.first.url;
+    final rpcUrl = op_sepolia.rpc;
+    final paymasterUrl = op_sepolia.paymaster.first.url;
+    final paymasterParams = op_sepolia.paymaster.first.option?.toJson();
+
+    final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "mint", _nftTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, amount: 5, decimals: false);
+    change(state?..nftBalance = balance, status: RxStatus.success());
+  }
+
   mintUsdt() async{
    final contractAddress = op_sepolia.contracts.usdt;
    final bundlerUrl = op_sepolia.bundler.first.url;

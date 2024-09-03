@@ -22,11 +22,11 @@ Future<String?> getBalance(String rpcUrl, String contractAddress, String tokenAb
   return decimals ? formatUnits(response.first as BigInt, 6) : "${response.first as BigInt}";
 }
 
-Future<String?> mint(String contractAddress, String bundlerUrl, String rpcUrl, String paymasterUrl, Map<String, dynamic> paymasterParams, String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, {int? amount, String? receiver}) async {
+Future<String?> mint(String contractAddress, String bundlerUrl, String rpcUrl, String paymasterUrl, Map<String, dynamic> paymasterParams, String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, {int? amount, String? receiver, bool decimals = true}) async {
   final contractName = tokenAbiPath.substring(tokenAbiPath.lastIndexOf("/") + 1, tokenAbiPath.lastIndexOf("."));
   final tokenAddress = EthereumAddress.fromHex(contractAddress);
   final targetAddress = EthereumAddress.fromHex(receiver ?? aaAddress);
-  final etherAmount = parseUnits("${amount ?? 0}", 6);
+  final etherAmount = decimals ? parseUnits("${amount ?? 0}", 6) : BigInt.from(amount ?? 0);
 
   logger.i("amount : ${etherAmount}");
 
@@ -85,7 +85,7 @@ Future<String?> mint(String contractAddress, String bundlerUrl, String rpcUrl, S
   debugPrint('Waiting for transaction...');
   final ev = await res.wait();
   debugPrint('Transaction hash: ${ev?.transactionHash}');
-  return await getBalance(rpcUrl, contractAddress, tokenAbiPath, aaAddress);
+  return await getBalance(rpcUrl, contractAddress, tokenAbiPath, aaAddress, decimals: decimals);
 }
 
 Future<List<String?>> mintUsdtAndNFT(String aaAddress, String usdtFunctionName, String usdtTokenAbiPath, String nftFunctionName, String nftTokenAbiPath, String initCode, String origin, {int? amount, String? receiver}) async {
