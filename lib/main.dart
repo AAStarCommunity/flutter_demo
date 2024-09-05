@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
         designSize: const Size(375, 812),
         builder: (_, __) => GetMaterialApp(
-          title: "HexagonWarrior",
+          title: "Zu.Coffee",
           initialBinding: BindingsBuilder(() async{
             Get.put(ThemeController());
             Get.put(AccountController());
