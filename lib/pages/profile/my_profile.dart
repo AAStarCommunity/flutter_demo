@@ -17,7 +17,7 @@ class MyProfile extends GetView<AccountController> {
           onLoading: const Center(child: CircularProgressIndicator.adaptive()),
           (state) {
         return Column(children: [
-          CircleAvatar(foregroundImage: AssetImage("assets/images/def_avatar.png")),
+          CircleAvatar(radius: 35, foregroundImage: AssetImage("assets/images/def_avatar.png")),
           const SizedBox(height: 24),
           Text("${state?.email}").marginOnly(left: 12, bottom: 20)
         ]).marginOnly(left: 24, top: 20);

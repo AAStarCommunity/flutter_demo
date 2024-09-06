@@ -84,7 +84,7 @@ class _MainPageState extends State<MainPage> {
         bottomNavigationBar: BottomNavigation(onIndexChanged: (index) {
           _pageController.jumpToPage(index);
         }),
-        body: PageView(controller: _pageController, children: [
+        body: PageView(physics: NeverScrollableScrollPhysics(), controller: _pageController, children: [
           CoffeeListPage(),
           MyProfile()
         ]));

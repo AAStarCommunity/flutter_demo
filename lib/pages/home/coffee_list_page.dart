@@ -133,7 +133,7 @@ class _CoffeeListPageState extends State<CoffeeListPage> with AutomaticKeepAlive
                            child: Text("\$ ",
                                style: TextStyle(
                                    color: AppColors.caramelBrown,
-                                   fontSize: 18,
+                                   fontSize: 12,
                                    fontWeight: FontWeight.bold)),
                          ),
                          Text(coffee.price.toString(),
