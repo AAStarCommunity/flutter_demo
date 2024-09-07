@@ -35,6 +35,9 @@ const en = {
   "agree": "Agree",
   "buyNow": "Buy Now",
   "noMoreData": "Ops! No more data",
+  "generating": "Generating...",
+  "saveSuc": "Save successfully",
+  "saveFail": "Save failed",
   ..._easy_refresh
 };
 

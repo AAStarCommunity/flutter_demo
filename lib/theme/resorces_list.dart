@@ -30,6 +30,25 @@ class Coffee {
     required this.prefixMedium,
     required this.prefixLarge,
   });
+
+  Map<String, dynamic> toJson(String size) {
+    return {
+      'size': size,
+      'category': category,
+      'image': image.assetName,
+      'ratting': ratting,
+      'name': name,
+      'mix': mix,
+      'price': price,
+      'mediumPrice': mediumPrice,
+      'largePrice': largePrice,
+      'mediumRating': mediumRating,
+      'largeRating': largeRating,
+      'prefix': prefix,
+      'prefixMedium': prefixMedium,
+      'prefixLarge': prefixLarge,
+    };
+  }
 }
 
 final _goods = <Coffee>[];
@@ -197,26 +216,26 @@ var _prefixLarge = [
   "(1.123)",
 ];
 var _mediumPrice = [
-  "5.10",
-  "6.20",
-  "3.56",
-  "4.77",
-  "2.64",
-  "7.25",
-  "3.86",
-  "8.56",
-  "10.84",
-  "6.98",
+  "5",
+  "6",
+  "3",
+  "4",
+  "2",
+  "7",
+  "3",
+  "8",
+  "10",
+  "6",
 ];
 var _largePrice = [
-  "6.03",
-  "7.21",
-  "4.23",
-  "5.45",
-  "3.32",
-  "8.44",
-  "3.09",
-  "9.87",
-  "11.63",
-  "7.57",
+  "6",
+  "7",
+  "4",
+  "5",
+  "3",
+  "8",
+  "3",
+  "9",
+  "11",
+  "7",
 ];
