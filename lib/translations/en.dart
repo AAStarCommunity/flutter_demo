@@ -14,7 +14,7 @@ const en = {
   "settings": "Settings",
   "account": "Account",
   "transaction": "Transaction",
-  "logout": "logout",
+  "logout": "Logout",
   "appearance": "Appearance",
   "complete_pin_code" : "Please enter a valid verification code",
   "codeSent": "Verification code sent",

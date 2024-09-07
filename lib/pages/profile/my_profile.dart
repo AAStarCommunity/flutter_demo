@@ -17,7 +17,7 @@ import '../qrcode/qrcode_page.dart';
 class MyProfile extends GetView<AccountController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(backgroundColor: Colors.transparent, actions: [
+    return Scaffold(appBar: AppBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor, actions: [
       IconButton(onPressed: (){
         Get.toNamed(QRCodePage.routeName);
       }, icon: Icon(CupertinoIcons.qrcode_viewfinder))

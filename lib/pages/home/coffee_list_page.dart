@@ -28,7 +28,7 @@ class _CoffeeListPageState extends State<CoffeeListPage> with AutomaticKeepAlive
   Widget build(BuildContext context) {
      super.build(context);
      final controller = Get.find<AccountController>();
-     return Scaffold(appBar: AppBar(backgroundColor: Colors.transparent, actions: [
+     return Scaffold(appBar: AppBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor, actions: [
         controller.obx((state){
           return ScanActionContainer(child: Icon(CupertinoIcons.qrcode_viewfinder), sender: state?.aa ?? "").marginOnly(right: 12);
         }, onLoading: const SizedBox())
@@ -118,16 +118,14 @@ class _CoffeeListPageState extends State<CoffeeListPage> with AutomaticKeepAlive
                        height: 20,
                      ),
                      Text(coffee.name,
-                         style: const TextStyle(
-                           color: Colors.white,
+                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                            fontSize: 20,
                          )),
                      const SizedBox(
                        height: 5,
                      ),
                      Text(coffee.mix,
-                         style: TextStyle(
-                           color: Colors.white.withOpacity(.5),
+                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
                            fontSize: 15,
                          )),
                      const SizedBox(
@@ -144,8 +142,8 @@ class _CoffeeListPageState extends State<CoffeeListPage> with AutomaticKeepAlive
                                    fontWeight: FontWeight.bold)),
                          ),
                          Text(coffee.price.toString(),
-                             style: const TextStyle(
-                               color: Colors.white,
+                             style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                               color: AppColors.caramelBrown,
                                fontWeight: FontWeight.bold,
                                fontSize: 18,
                              )),
