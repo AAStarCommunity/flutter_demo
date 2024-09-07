@@ -80,36 +80,6 @@ class MyProfile extends GetView<AccountController> {
     ]);
   }
 
-  void showBiometricDialog(BuildContext context, ValueChanged<int> callback) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('dialogTitle'.tr),
-          content: Text('dialogContent'.tr),
-          actions: <Widget>[
-            TextButton(
-              child: Text('disagree'.tr),
-              onPressed: () {
-                Navigator.of(context).pop();
-                // 这里可以添加用户不同意时的逻辑
-                callback.call(0);
-              },
-            ),
-            TextButton(
-              child: Text('agree'.tr),
-              onPressed: () {
-                Navigator.of(context).pop();
-                callback?.call(1);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   _logout() async{
     showLoading();
     try {

@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:HexagonWarrior/pages/account/account_controller.dart';
+import 'package:HexagonWarrior/utils/ui/show_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -398,7 +402,7 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
           ).marginSymmetric(horizontal: 18),
         ],
       )),
-      bottomNavigationBar: Container(padding: EdgeInsets.symmetric(horizontal: 12), color: Theme.of(context).colorScheme.surface, child: Row(
+      bottomNavigationBar: Container(padding: EdgeInsets.symmetric(horizontal: 12), color: Theme.of(context).colorScheme.surface, child: SafeArea(child: SizedBox(height: 60, child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -438,10 +442,25 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
             ],
           ),
           CupertinoButton.filled(onPressed: () {
-
-          }, child: Text("Buy Now".tr)),
+            showBiometricDialog(context, (index) {
+              if(index == 1) {
+                runZonedGuarded((){
+                  showLoading();
+                  Get.find<AccountController>().sendUsdt(amount: widget.coffee.price).then((res){
+                    closeLoading();
+                    if(res != null) {
+                      showSnackMessage("Successfully!");
+                    }
+                  });
+                }, (e, s){
+                   closeLoading();
+                   showSnackMessage(e.toString());
+                });
+              }
+            });
+          }, child: Text("buyNow".tr)),
         ],
-      ), height: 60),
+      )))),
     );
   }
 

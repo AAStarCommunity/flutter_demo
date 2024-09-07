@@ -34,6 +34,7 @@ const zhCN = {
   "dialogContent": "每次操作都需要进行生物识别才能继续。您是否同意?",
   "disagree": "不同意",
   "agree": "同意",
+  "buyNow": "购买",
   ..._easy_refresh
 };
 

@@ -33,6 +33,7 @@ const en = {
   "dialogContent": "Biometric authentication is required for each operation. Do you agree?",
   "disagree": "Disagree",
   "agree": "Agree",
+  "buyNow": "Buy Now",
   ..._easy_refresh
 };
 
