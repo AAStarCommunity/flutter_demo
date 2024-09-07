@@ -35,6 +35,7 @@ const zhCN = {
   "disagree": "不同意",
   "agree": "同意",
   "buyNow": "购买",
+  "noMoreData": "暂无数据",
   ..._easy_refresh
 };
 

@@ -34,6 +34,7 @@ const en = {
   "disagree": "Disagree",
   "agree": "Agree",
   "buyNow": "Buy Now",
+  "noMoreData": "Ops! No more data",
   ..._easy_refresh
 };
 
