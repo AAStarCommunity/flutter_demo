@@ -38,6 +38,7 @@ const en = {
   "generating": "Generating...",
   "saveSuc": "Save successfully",
   "saveFail": "Save failed",
+  "free": "Free",
   ..._easy_refresh
 };
 
