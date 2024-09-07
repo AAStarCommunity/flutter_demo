@@ -33,6 +33,7 @@ class _QRCodePageState extends State<QRCodePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text('qrCode'.tr, style: Theme.of(context).textTheme.titleMedium),
         actions: [
           // IconButton(onPressed: _startQRScan, icon: Icon(CupertinoIcons.camera_viewfinder))
