@@ -61,6 +61,7 @@ class MyProfile extends GetView<AccountController> {
                           runZonedGuarded(() async{
                             controller.mintUsdt();
                           }, (e, s) {
+                            if(!e.toString().contains("filter"))showSnackMessage(e.toString());
                             logger.e("mintUsdtError", error: e, stackTrace: s);
                           });
                         }
