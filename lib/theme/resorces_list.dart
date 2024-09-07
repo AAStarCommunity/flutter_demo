@@ -1,5 +1,26 @@
 import 'package:flutter/material.dart';
 
+
+class ShareData {
+  late String receiver;
+  late String coffee;
+
+  ShareData(this.receiver, this.coffee);
+
+  ShareData.fromJson(Map<String, dynamic> json){
+    this.receiver = json['receiver'];
+    this.coffee = json['data'];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "receiver": receiver,
+      "data": coffee
+    };
+  }
+}
+
+
 class Coffee {
   final int category;
   final AssetImage image;
@@ -49,7 +70,34 @@ class Coffee {
       'prefixLarge': prefixLarge,
     };
   }
+
+  factory Coffee.fromJson(Map<String, dynamic> json) {
+    return Coffee(
+      category: json['category'] as int,
+      image: AssetImage(json['image'] as String),
+      ratting: json['ratting'] as num,
+      name: json['name'] as String,
+      mix: json['mix'] as String,
+      price: json['price'] as num,
+      mediumPrice: json['mediumPrice'] as num,
+      largePrice: json['largePrice'] as num,
+      mediumRating: json['mediumRating'] as num,
+      largeRating: json['largeRating'] as num,
+      prefix: json['prefix'] as String,
+      prefixMedium: json['prefixMedium'] as String,
+      prefixLarge: json['prefixLarge'] as String,
+    );
+  }
 }
+
+extension CoffeeExt on Coffee {
+
+  String getPrice(String size){
+    return "${size == "S" ? price : size == "M" ? mediumPrice : largePrice}";
+  }
+
+}
+
 
 final _goods = <Coffee>[];
 
