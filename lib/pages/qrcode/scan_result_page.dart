@@ -31,8 +31,9 @@ class ScanResultPage extends GetView<AccountController> {
       final coffee = Coffee.fromJson(coffeeMap);
       final maxWidth = context.width / 2;
       final size = coffeeMap["size"];
-      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      return SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [CoffeeWidget(coffee: coffee, size: size, maxWidth: maxWidth, bottom: SizedBox())], mainAxisAlignment: MainAxisAlignment.center),
+        const SizedBox(height: 20),
         Text("${"address".tr}：", style: TextStyle(fontWeight: FontWeight.w600)),
         Text("$address"),
         const SizedBox(height: 8),
@@ -47,26 +48,30 @@ class ScanResultPage extends GetView<AccountController> {
         const SizedBox(height: 24),
         ObxValue((handing){
           return Row(children: [FilledButton(onPressed: () async{
-            if(handing.value) {
-              toast("wait".tr);
-              return;
-            }
-            await runZonedGuarded(() async {
-              handing.value = true;
-              final balance = await Get.find<AccountController>().sendUsdt(receiver: address, amount: 1);
-              handing.value = false;
-              if(isNotNull(balance)) {
-                toast("paySuccess".tr);
-                await Future.delayed(const Duration(seconds: 200));
-                Get.back();
+            await showBiometricDialog(context, (index) async{
+              if(index == 1) {
+                if(handing.value) {
+                  toast("wait".tr);
+                  return;
+                }
+                await runZonedGuarded(() async {
+                  handing.value = true;
+                  final balance = await Get.find<AccountController>().sendUsdt(receiver: address, amount: 1);
+                  handing.value = false;
+                  if(isNotNull(balance)) {
+                    toast("paySuccess".tr);
+                    await Future.delayed(const Duration(seconds: 200));
+                    Get.back();
+                  }
+                }, (e, s) {
+                  handing.value = false;
+                  if(!e.toString().contains("filter"))toast(e.toString());
+                });
               }
-            }, (e, s) {
-              handing.value = false;
-              if(!e.toString().contains("filter"))toast(e.toString());
             });
           }, child: handing.value ? SizedBox(width: 12, height: 12, child: Center(child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))) : Text("pay".tr))], mainAxisAlignment: MainAxisAlignment.center);
         }, false.obs)
-      ]).paddingSymmetric(horizontal: 24);
+      ]).paddingSymmetric(horizontal: 24));
     }));
   }
 
