@@ -72,8 +72,8 @@ class _QRCodePageState extends State<QRCodePage> {
                                   image: AssetImage('assets/images/ic_launcher.png'),
                                 ),
                               ),
-                            )).paddingSymmetric(vertical: 50),
-                            // const Text("扫描二维码，马上认识我")
+                            )).paddingOnly(top: 50, bottom: 12),
+                            Text("${state?.aa}", style: TextStyle(fontSize: 8), overflow: TextOverflow.ellipsis).marginOnly(bottom: 50)
                           ])),
                     )),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
