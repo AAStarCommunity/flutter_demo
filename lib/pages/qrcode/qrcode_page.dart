@@ -68,9 +68,9 @@ class _QRCodePageState extends State<QRCodePage> {
                             SizedBox(width: context.width - 100, height: context.width - 100, child: PrettyQrView.data(
                               data: state?.aa ?? "",
                               decoration: const PrettyQrDecoration(
-                                image: PrettyQrDecorationImage(
-                                  image: AssetImage('assets/images/ic_launcher.png'),
-                                ),
+                                // image: PrettyQrDecorationImage(
+                                //   image: AssetImage('assets/images/ic_launcher.png'),
+                                // ),
                               ),
                             )).paddingOnly(top: 50, bottom: 12),
                             Text("${state?.aa}", style: TextStyle(fontSize: 8), overflow: TextOverflow.ellipsis).marginOnly(bottom: 50)

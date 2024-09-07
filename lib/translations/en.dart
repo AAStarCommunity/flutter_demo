@@ -39,6 +39,8 @@ const en = {
   "saveSuc": "Save successfully",
   "saveFail": "Save failed",
   "free": "Free",
+  "enterAmount": "Please enter the transfer amount",
+  "accountEqual": "Payment cannot be made with one account",
   ..._easy_refresh
 };
 
