@@ -62,18 +62,18 @@ class _CoffeeDetailsPageState extends State<CoffeeDetailsPage> {
                           ), onTap: (){
                             Get.back();
                           }),
-                          // Container(
-                          //     height: 40,
-                          //     width: 40,
-                          //     decoration: BoxDecoration(
-                          //       color: Colors.black,
-                          //       borderRadius: BorderRadius.circular(10),
-                          //     ),
-                          //     child: const Icon(
-                          //         Icons.favorite,
-                          //         color: Colors.orange
-                          //     )
-                          // )
+                          Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Icon(
+                                  Icons.save_alt,
+                                  color: Colors.orange
+                              )
+                          )
                         ],
                       ),
                     ),

@@ -45,7 +45,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
         change(account, status: RxStatus.success());
         update();
       }, (e, s) {
-        logger.e(e.toString(), stackTrace: s);
+        logger.e("getAccountInfo", error: e, stackTrace: s);
       });
     }
     return null;
