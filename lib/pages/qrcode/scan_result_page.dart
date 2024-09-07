@@ -42,6 +42,7 @@ class ScanResultPage extends GetView<AccountController> {
         final maxWidth = context.width / 2;
         size = coffeeMap["size"];
         price = coffee.getPrice(size);
+        _amount.value = price;
         card = Row(children: [CoffeeWidget(coffee: coffee, size: size, maxWidth: maxWidth, bottom: SizedBox())], mainAxisAlignment: MainAxisAlignment.center);
       }
       return SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -81,24 +82,24 @@ class ScanResultPage extends GetView<AccountController> {
               showSnackMessage("insufficientBalance".tr);
               return;
             }
+            if(handing.value) {
+              showSnackMessage("wait".tr);
+              return;
+            }
             await showBiometricDialog(context, (index) async{
               if(index == 1) {
-                if(handing.value) {
-                  toast("wait".tr);
-                  return;
-                }
                 await runZonedGuarded(() async {
                   handing.value = true;
                   final balance = await Get.find<AccountController>().sendUsdt(receiver: address, amount: amount);
                   handing.value = false;
                   if(isNotNull(balance)) {
-                    toast("paySuccess".tr);
+                    showSnackMessage("paySuccess".tr);
                     await Future.delayed(const Duration(seconds: 200));
                     Get.back();
                   }
                 }, (e, s) {
                   handing.value = false;
-                  if(!e.toString().contains("filter"))toast(e.toString());
+                  if(!e.toString().contains("filter"))showSnackMessage(e.toString());
                 });
               }
             });
