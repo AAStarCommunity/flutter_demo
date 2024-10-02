@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:HexagonWarrior/api/air_account_api_ext.dart';
 import 'package:HexagonWarrior/api/api.dart';
 import 'package:HexagonWarrior/api/generic_response.dart';
+import 'package:HexagonWarrior/api/requests/chain_request.dart';
 import 'package:HexagonWarrior/api/requests/reg_request.dart';
 import 'package:HexagonWarrior/api/requests/sign_request.dart';
 import 'package:HexagonWarrior/api/response/reg_response.dart';
@@ -17,7 +18,7 @@ import '../../api/requests/prepare_request.dart';
 import '../../config/tx_configs.dart';
 import '../../utils/validate_util.dart';
 
-const _ORIGIN_DOMAIN = "https://demoweb.aastar.io";
+const _ORIGIN_DOMAIN = "https://airaccount-pr-32.onrender.com";
 const _network = "optimism-sepolia";
 
 const ORIGIN_DOMAIN = _ORIGIN_DOMAIN;
@@ -28,7 +29,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
   final _nftTokenAbiPath = "assets/contracts/AAStarDemoNFT.json";
 
   Future<AccountInfo?> getAccountInfo() async {
-    final resp = await Api().getAccountInfo();
+    final resp = await Api().getAccountInfo(_network);
     if (resp.success) {
       final account = AccountInfo.fromJson(resp.data!.toJson());
       change(account, status: RxStatus.success());
@@ -47,6 +48,11 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
       }, (e, s) {
         logger.e("getAccountInfo", error: e, stackTrace: s);
       });
+    } else if(resp.code == 404) {
+      var res = await this.createWallet(ChainRequest(network: _network));
+      if(res.success) {
+        await getAccountInfo();
+      }
     }
     return null;
   }
@@ -54,7 +60,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
   mintUsdtAndMintNft() async{
     final balances = await mintUsdtAndNFT(state!.aa!,
         "_mint", _usdtTokenAbiPath,
-        "mint", _nftTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, amount: 5);
+        "mint", _nftTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, _network, amount: 5);
     if(balances.isNotEmpty){
       change(state?..usdtBalance = balances.first..nftBalance = balances.last, status: RxStatus.success());
     }
@@ -67,7 +73,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
     final paymasterUrl = op_sepolia.paymaster.first.url;
     final paymasterParams = op_sepolia.paymaster.first.option?.toJson();
 
-    final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "mint", _nftTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, amount: 5, decimals: false);
+    final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "mint", _nftTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, _network, amount: 5, decimals: false);
     change(state?..nftBalance = balance, status: RxStatus.success());
   }
 
@@ -78,7 +84,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
    final paymasterUrl = op_sepolia.paymaster.first.url;
    final paymasterParams = op_sepolia.paymaster.first.option?.toJson();
 
-   final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "_mint", _usdtTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, amount: 5);
+   final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "_mint", _usdtTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, _network, amount: 5);
    change(state?..usdtBalance = balance, status: RxStatus.success());
    return balance;
   }
@@ -93,7 +99,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
     final paymasterUrl = op_sepolia.paymaster.first.url;
     final paymasterParams = op_sepolia.paymaster.first.option?.toJson();
 
-    final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "transfer", _usdtTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, amount: amount ?? 1, receiver: receiver ?? rcv0);
+    final balance = await mint(contractAddress, bundlerUrl, rpcUrl, paymasterUrl, paymasterParams ?? {}, state!.aa!, "transfer", _usdtTokenAbiPath, state!.initCode!, ORIGIN_DOMAIN, _network, amount: amount ?? 1, receiver: receiver ?? rcv0);
     change(state?..usdtBalance = balance, status: RxStatus.success());
     return balance;
   }
@@ -120,7 +126,7 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
       final response = GenericResponse.errorWithDioException(e as DioException);
       if (response.data != null &&
           '${response.data}'.contains("User already exists")) {
-        return await login(email, captcha);
+        return await login(/*email, captcha*/);
       }
       return response;
     }
@@ -131,19 +137,32 @@ class AccountController extends GetxController with StateMixin<AccountInfo> {
     return res;
   }
 
-  Future<GenericResponse> login(String email, String? captcha) async {
+  Future<GenericResponse> login(/*String email, String? captcha*/) async {
     try {
       final api = Api();
-      var res = await api.sign(SignRequest(captcha: captcha, email: email, origin: _ORIGIN_DOMAIN));
+      var res = await api.sign(SignRequest(/*captcha: captcha, email: email, */origin: _ORIGIN_DOMAIN));
       if (res.success) {
         final body = await api.createAssertionFromPublic(res.data!.toJson(), _ORIGIN_DOMAIN);
-        final resp = await api.signVerify(email, _ORIGIN_DOMAIN, body);
+        final resp = await api.signVerify(_ORIGIN_DOMAIN, body);
         if (isNotNull(resp.token)) {
           return GenericResponse.success("ok");
         }
       }
       return res;
     } catch(e, s) {
+      return GenericResponse.errorWithDioException(e as DioException);
+    }
+  }
+
+  Future<GenericResponse> createWallet(ChainRequest req) async{
+    try {
+      final api = Api();
+      final res = await api.createWallet(req);
+      if(res.success) {
+        return GenericResponse.success("ok");
+      }
+      return res;
+    } catch (e, s) {
       return GenericResponse.errorWithDioException(e as DioException);
     }
   }

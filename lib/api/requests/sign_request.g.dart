@@ -7,14 +7,14 @@ part of 'sign_request.dart';
 // **************************************************************************
 
 SignRequest _$SignRequestFromJson(Map<String, dynamic> json) => SignRequest(
-      captcha: json['captcha'] as String?,
-      email: json['email'] as String?,
+      // captcha: json['captcha'] as String?,
+      // email: json['email'] as String?,
       origin: json['origin'] as String?,
     );
 
 Map<String, dynamic> _$SignRequestToJson(SignRequest instance) =>
     <String, dynamic>{
-      'captcha': instance.captcha,
-      'email': instance.email,
+      // 'captcha': instance.captcha,
+      // 'email': instance.email,
       'origin': instance.origin,
     };

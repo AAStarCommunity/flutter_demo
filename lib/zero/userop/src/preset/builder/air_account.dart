@@ -73,7 +73,7 @@ class AirAccount extends UserOperationBuilder {
   }
 
   /// Initializes a AirAccount object and returns it.
-  static Future<AirAccount> init(String aa, String initCode, String rpcUrl, String origin, {IPresetBuilderOpts? opts}) async {
+  static Future<AirAccount> init(String aa, String initCode, String rpcUrl, String network, String origin, {IPresetBuilderOpts? opts, String? networkAlias}) async {
     final senderAddress = EthereumAddress.fromHex(aa);
     final instance = AirAccount(rpcUrl, opts: opts, sender: senderAddress);
 
@@ -96,7 +96,7 @@ class AirAccount extends UserOperationBuilder {
       ),
     );
 
-    return withPM.useMiddleware(signUserOpHashUseSignature(origin))
+    return withPM.useMiddleware(signUserOpHashUseSignature(origin, network, networkAlias: networkAlias))
     as AirAccount;
   }
 

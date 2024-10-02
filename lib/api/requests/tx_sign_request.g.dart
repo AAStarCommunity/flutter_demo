@@ -8,14 +8,18 @@ part of 'tx_sign_request.dart';
 
 TxSignRequest _$TxSignRequestFromJson(Map<String, dynamic> json) =>
     TxSignRequest(
-      nonce: json['nonce'] as String?,
+      ticket: json['ticket'] as String?,
       origin: json['origin'] as String?,
       txdata: json['txdata'] as String?,
+      network: json['network'] as String?,
+      networkAlias: json['network_alias'] as String?
     );
 
 Map<String, dynamic> _$TxSignRequestToJson(TxSignRequest instance) =>
     <String, dynamic>{
-      'nonce': instance.nonce,
+      'ticket': instance.ticket,
       'origin': instance.origin,
       'txdata': instance.txdata,
+      'network': instance.network,
+      'network_alias': instance.networkAlias
     };

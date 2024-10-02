@@ -1,6 +1,7 @@
 import 'package:HexagonWarrior/api/generic_response.dart';
 import 'package:HexagonWarrior/api/requests/assertion_verify_request_body.dart';
 import 'package:HexagonWarrior/api/requests/bind_account_request.dart';
+import 'package:HexagonWarrior/api/requests/chain_request.dart';
 import 'package:HexagonWarrior/api/requests/sign_account_request.dart';
 import 'package:HexagonWarrior/api/requests/tx_sign_request.dart';
 import 'package:HexagonWarrior/api/requests/verify_request_body.dart';
@@ -14,13 +15,12 @@ import 'local_http_client.dart';
 import 'requests/prepare_request.dart';
 import 'requests/reg_request.dart';
 import 'requests/sign_request.dart';
-import 'requests/tx_sign_verify_request.dart';
 import 'response/account_info_response.dart';
 import 'response/reg_verify_response.dart';
 
 part 'api.g.dart';
 
-@RestApi(baseUrl: 'https://airaccount.aastar.io')
+@RestApi(baseUrl: 'https://airaccount-pr-32.onrender.com')
 abstract class Api{
   factory Api({Dio? dio, String? baseUrl}) {
     LocalHttpClient().init(baseUrl: baseUrl);
@@ -40,16 +40,16 @@ abstract class Api{
   Future<GenericResponse<SignResponse>> sign(@Body() SignRequest req);
 
   @POST("/api/passkey/v1/sign/verify")
-  Future<RegVerifyResponse> signVerify(@Query("email") String email, @Query("origin") String origin, @Body() AssertionVerifyRequestBody req);
+  Future<RegVerifyResponse> signVerify(@Query("origin") String origin, @Body() AssertionVerifyRequestBody req);
 
   @GET("/api/passkey/v1/account/info")
-  Future<GenericResponse<AccountInfoResponse>> getAccountInfo();
+  Future<GenericResponse<AccountInfoResponse>> getAccountInfo(@Query('network') String network);
 
   @POST("/api/passkey/v1/tx/sign")
   Future<GenericResponse<SignResponse>> txSign(@Body() TxSignRequest req);
 
   @POST("/api/passkey/v1/tx/sign/verify")
-  Future<GenericResponse<SignVerifyResponse>> txSignVerify(@Query("nonce") String nonce, @Query("origin") String origin, @Body() AssertionVerifyRequestBody req);
+  Future<GenericResponse<SignVerifyResponse>> txSignVerify(@Query("ticket") String ticket, @Query('network') String network, @Query("origin") String origin, @Query('network_alias') String? networkAlias, @Body() AssertionVerifyRequestBody req);
 
   @POST("/api/account/v1/transfer")
   Future<GenericResponse<dynamic>> transfer(@Query("apiKey") String apiKey);
@@ -59,4 +59,7 @@ abstract class Api{
 
   @POST("/api/account/v1/sign")
   Future<GenericResponse<dynamic>> signAccount(@Body() SignAccountRequest req);
+
+  @POST("/api/passkey/v1/account/chain")
+  Future<GenericResponse<dynamic>> createWallet(@Body() ChainRequest req);
 }

@@ -13,7 +13,7 @@ class _Api implements Api {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://airaccount.aastar.io';
+    baseUrl ??= 'https://airaccount-pr-32.onrender.com';
   }
 
   final Dio _dio;
@@ -137,13 +137,11 @@ class _Api implements Api {
 
   @override
   Future<RegVerifyResponse> signVerify(
-    email,
     origin,
     req,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'email': email,
       r'origin': origin,
     };
     final _headers = <String, dynamic>{};
@@ -167,9 +165,11 @@ class _Api implements Api {
   }
 
   @override
-  Future<GenericResponse<AccountInfoResponse>> getAccountInfo() async {
+  Future<GenericResponse<AccountInfoResponse>> getAccountInfo(network) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'network': network,
+    };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -220,11 +220,13 @@ class _Api implements Api {
   }
 
   @override
-  Future<GenericResponse<SignVerifyResponse>> txSignVerify(nonce, origin, req) async {
+  Future<GenericResponse<SignVerifyResponse>> txSignVerify(ticket, network, origin, networkAlias, req) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'nonce': nonce,
+      r'ticket': ticket,
+      r'network': network,
       r'origin': origin,
+      r'network_alias': networkAlias
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
@@ -326,6 +328,33 @@ class _Api implements Api {
     final value = GenericResponse<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
+    );
+    return value;
+  }
+
+  @override
+  Future<GenericResponse<dynamic>> createWallet(req) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(req.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GenericResponse<dynamic>>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          '/api/passkey/v1/account/chain',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GenericResponse<dynamic>.fromJson(
+      _result.data!,
+          (json) => json as dynamic,
     );
     return value;
   }

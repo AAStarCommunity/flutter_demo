@@ -97,6 +97,7 @@ class Assets {
   static const String requestsAssertionVerifyRequestBody = 'lib/api/requests/assertion_verify_request_body.dart';
   static const String requestsBindAccountRequest = 'lib/api/requests/bind_account_request.dart';
   static const String requestsBindAccountRequest.g = 'lib/api/requests/bind_account_request.g.dart';
+  static const String requestsChainRequest = 'lib/api/requests/chain_request.dart';
   static const String requestsPrepareRequest = 'lib/api/requests/prepare_request.dart';
   static const String requestsPrepareRequest.g = 'lib/api/requests/prepare_request.g.dart';
   static const String requestsRegRequest = 'lib/api/requests/reg_request.dart';

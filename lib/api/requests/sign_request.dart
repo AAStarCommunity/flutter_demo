@@ -4,13 +4,13 @@ part 'sign_request.g.dart';
 
 @JsonSerializable()
 class SignRequest {
-  String? captcha;
-  String? email;
+  // String? captcha;
+  // String? email;
   String? origin;
 
   SignRequest({
-    this.captcha,
-    this.email,
+    // this.captcha,
+    // this.email,
     this.origin,
   });
 

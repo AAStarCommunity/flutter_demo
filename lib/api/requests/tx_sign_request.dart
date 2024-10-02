@@ -4,14 +4,18 @@ part 'tx_sign_request.g.dart';
 
 @JsonSerializable()
 class TxSignRequest {
-  String? nonce;
+  String? ticket;
   String? origin;
   String? txdata;
+  String? network;
+  String? networkAlias;
 
   TxSignRequest({
-    this.nonce,
+    this.ticket,
     this.origin,
     this.txdata,
+    required this.network,
+    this.networkAlias,
   });
 
   factory TxSignRequest.fromJson(Map<String, dynamic> json) => _$TxSignRequestFromJson(json);

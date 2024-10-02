@@ -25,7 +25,7 @@ Future<String?> getBalance(String rpcUrl, String contractAddress, String tokenAb
   return decimals ? formatUnits(response.first as BigInt, 6) : "${response.first as BigInt}";
 }
 
-Future<String?> mint(String contractAddress, String bundlerUrl, String rpcUrl, String paymasterUrl, Map<String, dynamic> paymasterParams, String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, {num? amount, String? receiver, bool decimals = true}) async {
+Future<String?> mint(String contractAddress, String bundlerUrl, String rpcUrl, String paymasterUrl, Map<String, dynamic> paymasterParams, String aaAddress, String functionName, String tokenAbiPath, String initCode, String origin, String network, {num? amount, String? receiver, bool decimals = true, String? networkAlias}) async {
   final contractName = tokenAbiPath.substring(tokenAbiPath.lastIndexOf("/") + 1, tokenAbiPath.lastIndexOf("."));
   final tokenAddress = EthereumAddress.fromHex(contractAddress);
   final targetAddress = EthereumAddress.fromHex(receiver ?? aaAddress);
@@ -47,8 +47,10 @@ Future<String?> mint(String contractAddress, String bundlerUrl, String rpcUrl, S
     aaAddress,
     initCode,
     rpcUrl,
+    network,
     origin,
     opts: opts,
+    networkAlias: networkAlias
   );
 
   final client = await Client.init(bundlerUrl);
@@ -92,7 +94,7 @@ Future<String?> mint(String contractAddress, String bundlerUrl, String rpcUrl, S
   return await getBalance(rpcUrl, contractAddress, tokenAbiPath, aaAddress, decimals: decimals);
 }
 
-Future<List<String?>> mintUsdtAndNFT(String aaAddress, String usdtFunctionName, String usdtTokenAbiPath, String nftFunctionName, String nftTokenAbiPath, String initCode, String origin, {int? amount, String? receiver}) async {
+Future<List<String?>> mintUsdtAndNFT(String aaAddress, String usdtFunctionName, String usdtTokenAbiPath, String nftFunctionName, String nftTokenAbiPath, String initCode, String origin, String network, {int? amount, String? receiver, String? networkAlias}) async {
 
   final targetAddress = EthereumAddress.fromHex(receiver ?? aaAddress);
 
@@ -113,7 +115,9 @@ Future<List<String?>> mintUsdtAndNFT(String aaAddress, String usdtFunctionName, 
     aaAddress,
     initCode,
     rpcUrl,
+    network,
     origin,
+    networkAlias: networkAlias,
     opts: opts,
   );
 
