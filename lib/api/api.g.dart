@@ -13,7 +13,7 @@ class _Api implements Api {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://airaccount-pr-32.onrender.com';
+    baseUrl ??= 'https://airaccount.aastar.io';
   }
 
   final Dio _dio;

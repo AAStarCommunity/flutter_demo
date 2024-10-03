@@ -20,7 +20,7 @@ import 'response/reg_verify_response.dart';
 
 part 'api.g.dart';
 
-@RestApi(baseUrl: 'https://airaccount-pr-32.onrender.com')
+@RestApi(baseUrl: 'https://airaccount.aastar.io')
 abstract class Api{
   factory Api({Dio? dio, String? baseUrl}) {
     LocalHttpClient().init(baseUrl: baseUrl);

@@ -18,7 +18,7 @@ import '../../api/requests/prepare_request.dart';
 import '../../config/tx_configs.dart';
 import '../../utils/validate_util.dart';
 
-const _ORIGIN_DOMAIN = "https://airaccount-pr-32.onrender.com";
+const _ORIGIN_DOMAIN = "https://airaccount.aastar.io";
 const _network = "optimism-sepolia";
 
 const ORIGIN_DOMAIN = _ORIGIN_DOMAIN;
